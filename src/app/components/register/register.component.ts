@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { ApiServiceService } from '../../Api Methods/api-service.service';
 
 @Component({
   selector: 'app-register',
@@ -7,52 +8,46 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-  passwordType = 'password'; //passwordtype
-  isShow = false; //is password shown
-  isDisabled = false; //is password shown disabled
-
-  isRegSuccess = false; //is register success
-  showProgressbar = false; //is progressbar shown
-
+  passwordType = 'password'; // passwordtype
+  emailexists;
+  isRegSuccess = false; // is register success
+  showProgressbar = false; // is progressbar shown
+  regBtnDisabled = false; // is register button shown
   registerForm: FormGroup;
-  constructor(private formbuilder: FormBuilder) { }
+  constructor(private formbuilder: FormBuilder, private api: ApiServiceService) { }
 
   ngOnInit() {
     this.registerForm = this.formbuilder.group({
       name: ['', [Validators.required]],
       nickname: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
-      pass: ['', [Validators.required]]
+      password: ['', [Validators.required]]
     });
-  }
-
-  togglePass() {
-    if (this.isShow === false) {
-      this.passwordType = 'text';
-      this.isShow = true;
-    } else {
-      this.passwordType = 'password';
-      this.isShow = false;
-    }
   }
 
   userRegister() {
     if (this.registerForm.status === 'VALID') {
-      console.log(this.registerForm.value);
       this.registerForm.disable();
-      this.isDisabled =true;
-      this.showProgressbar= true;
-      this.isRegSuccess = true;
+      this.showProgressbar = true;
+      this.regBtnDisabled = true;
+      this.api.registerUser(this.registerForm.value)
+        .subscribe(
+          (res) => {
+            console.log(res);
+            this.showProgressbar = false;
+            this.isRegSuccess = true;
+          },
+          (err) => {
+            this.emailexists = 'email already in use';
+            this.regBtnDisabled = false;
+            this.showProgressbar = false;
+            this.registerForm.enable();
+          }
+        );
     } else {
       console.log(this.registerForm);
     }
+
   }
 
-  registerFormValidationstatus(){
-    if(this.registerForm.status == 'INVALID'){
-      return true;
-    }else{
-      return false;
-    }
-  }
 }

@@ -10,33 +10,37 @@
 
         <mat-form-field appearance="fill" class="width-100">
           <mat-label>Enter Name</mat-label>
+          <mat-icon matSuffix>person</mat-icon>
           <input type="text" matInput id="name" formControlName="name" required autocomplete="off">
           <mat-error *ngIf="registerForm.controls.name.hasError('required')" align="end">Field is required</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="fill" class="width-100">
           <mat-label>Enter Nick Name</mat-label>
+          <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
           <input type="text" matInput id="nickname" formControlName="nickname" required>
-          <mat-error *ngIf="registerForm.controls.nickname.hasError('required')" align="end">Field is required</mat-error>
+          <mat-error *ngIf="registerForm.controls.nickname.hasError('required')" align="end">Field is required
+          </mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="fill" class="width-100">
           <mat-label>Enter Email</mat-label>
-          <input type="tel"  matInput id="mail" formControlName="email" required>
-          <mat-error *ngIf="registerForm.controls.email.hasError('required') || registerForm.controls.email.hasError('email')" align="end">Please enter a valid email</mat-error>
+          <mat-icon matSuffix>mail</mat-icon>
+          <input type="tel" matInput id="mail" formControlName="email" required value="{{emailexists}}">
+          <mat-error
+            *ngIf="registerForm.controls.email.hasError('required') || registerForm.controls.email.hasError('email')"
+            align="end">Please enter a valid email</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="fill" class="width-100">
           <mat-label>Enter Password</mat-label>
-          <input [type]="passwordType" matInput id="pass" formControlName="pass" required>
-          <button type="button" mat-icon-button matSuffix (click)="togglePass()" [disabled]="isDisabled">
-            <mat-icon>{{isShow ? 'visibility' : 'visibility_off'}}</mat-icon>
-          </button>
-          <mat-error *ngIf="registerForm.controls.pass.hasError('required')" align="end">Field cannot be empty</mat-error>
+          <mat-icon matSuffix>security</mat-icon>
+          <input [type]="passwordType" matInput id="pass" formControlName="password" required>
+          <mat-error *ngIf="registerForm.controls.password.hasError('required')" align="end">Field cannot be empty
+          </mat-error>
         </mat-form-field>
-
-        <button type="submit" (click)="userRegister()" mat-raised-button
-          class="width-100 login-button" [ngClass]="{disabledBtn: registerFormValidationstatus()}" [disabled]="registerFormValidationstatus()">REGISTER</button>
+        <button type="submit" (click)="userRegister()" mat-raised-button class="width-100 login-button"
+          [ngClass]="{disabledBtn: regBtnDisabled}" [disabled]="regBtnDisabled">REGISTER</button>
 
       </div>
 
@@ -44,10 +48,9 @@
         <p class="text-muted">Already have an Account ? <a [routerLink]="['/login']">Signin</a></p>
       </div>
 
-    <mat-progress-bar *ngIf="showProgressbar" mode="indeterminate"></mat-progress-bar>
+      <mat-progress-bar *ngIf="showProgressbar" mode="indeterminate"></mat-progress-bar>
     </div>
   </div>
 </div>
-<!--
+
 <app-verification-sent *ngIf="isRegSuccess" [email]="registerForm.value.email"></app-verification-sent>
--->
