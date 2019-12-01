@@ -1,0 +1,27 @@
+<div class="main-root">
+  <div class="container-fluid header-section">
+  </div>
+  <div class="container flex-center">
+    <div class="login-window">
+      <div class="text-center logo-div">
+        <img src="../../../assets/Logo.png">
+      </div>
+
+      <mat-form-field appearance="fill" class="width-100">
+        <mat-label>Enter Username</mat-label>
+        <input matInput type="email">
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="width-100">
+        <mat-label>Enter Password</mat-label>
+        <input matInput type="password">
+      </mat-form-field>
+
+      <button mat-raised-button class="width-100 login-button">SIGNIN</button>
+      <div class="text-center mt-5 mb-2">
+        <p class="text-muted">Forgot Password? <a>Reset</a></p>
+        <a class="create-new-account-link" [routerLink]="['/register']">create a new Account</a>
+      </div>
+    </div>
+  </div>
+</div>
