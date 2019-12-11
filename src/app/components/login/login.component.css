@@ -40,17 +40,8 @@
 .flex-center .login-window  .logo-div{
   margin-bottom:30px;
 }
-::ng-deep .mat-focused .mat-form-field-label {
-  color: #0CABE5 !important;
- }
-::ng-deep .mat-focused .mat-form-field-ripple {
-  background-color: #0CABE5 !important;
-}
-::ng-deep .mat-form-field-ripple{
-  background-color: rgba(12, 171, 229, 0.301) !important;
-}
 .flex-center .login-window .login-button {
-  background: #0CABE5;
+  background: #6200EE;
   color: #fff;
   font-weight: 400;
   font-size: 25px;
@@ -61,6 +52,7 @@
 }
 .create-new-account-link {
   font-size: 15px;
+  color:#6200EE;
 }
 .width-100{
   width:100%;

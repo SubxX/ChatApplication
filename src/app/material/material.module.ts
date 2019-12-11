@@ -4,7 +4,8 @@ import {
   MatFormFieldModule,
   MatButtonModule,
   MatIconModule,
-  MatProgressBarModule
+  MatProgressBarModule,
+  MatProgressSpinnerModule
 } from '@angular/material';
 
 const material = [
@@ -12,7 +13,8 @@ const material = [
   MatFormFieldModule,
   MatButtonModule,
   MatIconModule,
-  MatProgressBarModule
+  MatProgressBarModule,
+  MatProgressSpinnerModule
 ];
 
 

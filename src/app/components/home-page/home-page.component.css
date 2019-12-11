@@ -1,0 +1,85 @@
+img{
+  pointer-events: none;
+}
+.width-90{
+  width:90%;
+  margin:auto;
+}
+.nav-item{
+  margin-right:30px;
+}
+.flex-center{
+  display: flex;
+  align-items: center;
+}
+.navbar-brand{
+  color:#4c4a77 !important;
+  font-size: 26px;
+  letter-spacing: 0.2rem;
+  font-weight: 400;
+}
+.nav-logo{
+  width:120px;
+  height: 50px;
+}
+.signup{
+  border-radius: 5px;
+  color: white !important;
+  width: 90px;
+  background: #6200EE;
+  border:none !important;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+.signup:hover{
+  background: rgba(99, 0, 238, 0.746);
+}
+
+.get-started{
+  border:none;
+  background: none;
+  background: linear-gradient(180deg, #6200EE 0%, #B690EC 100%);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.55);
+  color:white;
+  border-radius: 20px;
+  width:183px;
+  height:45px;
+  font-size: 19px;
+  font-weight: 500;
+}
+.get-started:focus{
+  outline:none;
+}
+.get-started:hover{
+  background: linear-gradient(160deg, #6200EE 0%, #B690EC 100%);
+}
+.titles{
+  text-align: left;
+}
+.main-title{
+  font-size: 36px;
+  columns: #000000;
+  margin-left: 5px;
+}
+.sub-title{
+  color:#000000;
+  margin-left: 5px;
+}
+.scroll-img{
+  position: relative;
+  left:50%;
+  width: 20px;
+  height: 50px;
+}
+.about-section{
+  width:100%;
+  clip-path: polygon(73% 9%, 100% 0, 100% 75%, 100% 100%, 0 100%, 0 9%);
+  background: linear-gradient(160deg, #6200EE 0%, #B690EC 100%);
+  overflow: hidden;
+}
+.ab-sections{
+  margin:100px 0;
+}
+.about-logos{
+  font-size: 120px;
+}

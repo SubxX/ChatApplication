@@ -8,14 +8,14 @@
 
       <div [formGroup]="registerForm">
 
-        <mat-form-field appearance="fill" class="width-100">
+        <mat-form-field appearance="outline" class="width-100">
           <mat-label>Enter Name</mat-label>
           <mat-icon matSuffix>person</mat-icon>
           <input type="text" matInput id="name" formControlName="name" required autocomplete="off">
           <mat-error *ngIf="registerForm.controls.name.hasError('required')" align="end">Field is required</mat-error>
         </mat-form-field>
 
-        <mat-form-field appearance="fill" class="width-100">
+        <mat-form-field appearance="outline" class="width-100">
           <mat-label>Enter Nick Name</mat-label>
           <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
           <input type="text" matInput id="nickname" formControlName="nickname" required>
@@ -23,19 +23,20 @@
           </mat-error>
         </mat-form-field>
 
-        <mat-form-field appearance="fill" class="width-100">
+        <mat-form-field appearance="outline" class="width-100">
           <mat-label>Enter Email</mat-label>
           <mat-icon matSuffix>mail</mat-icon>
-          <input type="tel" matInput id="mail" formControlName="email" required value="{{emailexists}}">
+          <input type="tel" matInput id="mail" formControlName="email" required>
           <mat-error
             *ngIf="registerForm.controls.email.hasError('required') || registerForm.controls.email.hasError('email')"
             align="end">Please enter a valid email</mat-error>
+          <mat-hint style="color:red;" *ngIf="emailexists">Email Exists</mat-hint>
         </mat-form-field>
 
-        <mat-form-field appearance="fill" class="width-100">
+        <mat-form-field appearance="outline" class="width-100">
           <mat-label>Enter Password</mat-label>
           <mat-icon matSuffix>security</mat-icon>
-          <input [type]="passwordType" matInput id="pass" formControlName="password" required>
+          <input type="password" matInput id="pass" formControlName="password" required>
           <mat-error *ngIf="registerForm.controls.password.hasError('required')" align="end">Field cannot be empty
           </mat-error>
         </mat-form-field>
@@ -48,7 +49,8 @@
         <p class="text-muted">Already have an Account ? <a [routerLink]="['/login']">Signin</a></p>
       </div>
 
-      <mat-progress-bar *ngIf="showProgressbar" mode="indeterminate"></mat-progress-bar>
+      <mat-progress-spinner *ngIf="showProgressspinner" class="mat-spinner-color" mode="indeterminate">
+      </mat-progress-spinner>
     </div>
   </div>
 </div>

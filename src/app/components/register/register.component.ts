@@ -8,10 +8,9 @@ import { ApiServiceService } from '../../Api Methods/api-service.service';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-  passwordType = 'password'; // passwordtype
-  emailexists;
+  emailexists = false;
   isRegSuccess = false; // is register success
-  showProgressbar = false; // is progressbar shown
+  showProgressspinner = false; // is progressbar shown
   regBtnDisabled = false; // is register button shown
   registerForm: FormGroup;
   constructor(private formbuilder: FormBuilder, private api: ApiServiceService) { }
@@ -28,20 +27,22 @@ export class RegisterComponent implements OnInit {
   userRegister() {
     if (this.registerForm.status === 'VALID') {
       this.registerForm.disable();
-      this.showProgressbar = true;
+      this.showProgressspinner = true;
       this.regBtnDisabled = true;
       this.api.registerUser(this.registerForm.value)
         .subscribe(
           (res) => {
-            console.log(res);
-            this.showProgressbar = false;
+            this.showProgressspinner = false;
             this.isRegSuccess = true;
           },
           (err) => {
-            this.emailexists = 'email already in use';
+            this.emailexists = true;
             this.regBtnDisabled = false;
-            this.showProgressbar = false;
+            this.showProgressspinner = false;
             this.registerForm.enable();
+            setTimeout(() => {
+              this.emailexists = false;
+            }, 3000);
           }
         );
     } else {
