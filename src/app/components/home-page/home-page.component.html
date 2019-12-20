@@ -8,61 +8,141 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav ml-auto">
       <li class="nav-item">
-        <a class="nav-link">About</a>
+        <a class="nav-link" href="#about-route-section">About</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link">Team</a>
+        <a class="nav-link" href="#team-route-section">Team</a>
       </li>
-      <li class="nav-item" [routerLink]="['/register']">
-        <a class="nav-link btn signup">Signup</a>
+      <li class="nav-item" [routerLink]="['/login']">
+        <a class="nav-link btn signup">Login</a>
       </li>
     </ul>
   </div>
 </nav>
-
-<section class="details-body mt-2">
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-md-6 titles flex-center mb-5 mt-1">
-        <div>
-          <p class="main-title mb-1">Chat Application for Modern Era</p>
-          <p class="sub-title mb-3">go online for free</p>
-          <button class="get-started">Get Started</button>
+<div class="header-main">
+  <div class="showcase">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-6 flex-align-center mb-5">
+          <div class="ml-4">
+            <h3 class="header-title-main">Chat Application for Modern Era</h3>
+            <p class="header-title-sub">go online for free</p>
+            <button class="get-started" [routerLink]="['/register']" routerLinkActive="router-link-active">Get
+              Started</button>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <img src="../../../assets/header-section-pic.svg" class="img-fluid">
         </div>
       </div>
-      <div class="col-md-6">
-        <img src="../../../assets/vector-home.png" class="img-fluid mt-3">
+    </div>
+  </div>
+</div>
+
+<div class="about-div" id="about-route-section">
+  <img src="../../../assets/scroll.png" class="scroll">
+  <div class="abt">
+    <div class="container">
+      <div class="row text-center text-white abt-boxes">
+        <div class="col-md-4">
+          <i class="material-icons about-logos">check_circle</i>
+          <h1 class="mb-4">Reliability</h1>
+          <p>Reliability is the first priority of our application is simply dummy text of the printing
+            and
+            typesetting industry. Lorem Ipsum has been the industry's</p>
+        </div>
+        <div class="col-md-4">
+          <i class="material-icons about-logos">security</i>
+          <h1 class="mb-4">Performance</h1>
+          <p>Reliability is the first priority of our application is simply dummy text of the printing
+            and
+            typesetting industry. Lorem Ipsum has been the industry's</p>
+        </div>
+        <div class="col-md-4">
+          <i class="material-icons about-logos">play_circle_outline</i>
+          <h1 class="mb-4">Service</h1>
+          <p>Reliability is the first priority of our application is simply dummy text of the printing
+            and
+            typesetting industry. Lorem Ipsum has been the industry's</p>
+        </div>
       </div>
     </div>
   </div>
-  <img src="../../../assets/scroll.png" class="scroll-img">
-</section>
+</div>
 
-<section class="about-section mt-5">
-  <div class=" row ab-sections text-white text-center">
-    <div class="col-md-4">
-      <i class="material-icons about-logos">
-        check_circle
-      </i>
-      <h1>Reliability</h1>
-      <p>Reliability is the first priority of our application is simply dummy text of the printing and typesetting
-        industry. Lorem Ipsum has been the industry's</p>
-    </div>
-    <div class="col-md-4">
-      <i class="material-icons about-logos">
-        security
-      </i>
-      <h1>Performance</h1>
-      <p>Reliability is the first priority of our application is simply dummy text of the printing and typesetting
-        industry. Lorem Ipsum has been the industry's</p>
-    </div>
-    <div class="col-md-4">
-      <i class="material-icons about-logos">
-        play_circle_outline
-      </i>
-      <h1>Free service</h1>
-      <p>Reliability is the first priority of our application is simply dummy text of the printing and typesetting
-        industry. Lorem Ipsum has been the industry's</p>
+<div class="team-section" id="team-route-section">
+  <div class="container team-divi mt-5 pb-5">
+    <div class="row">
+      <div class="col-md-xs team-member">
+        <div class="up">
+          <img src="../../../assets/team-user-svg.svg" class="team-logos">
+        </div>
+        <div class="down">
+          <div class="container">
+            <h4>Subham Bhattacharya</h4>
+            <p>Team Leader
+              Full Stack Web Developer</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-xs team-member">
+        <div class="up">
+          <img src="../../../assets/team-user-svg.svg" class="team-logos">
+        </div>
+        <div class="down">
+          <div class="container">
+            <h4>Subham Bhattacharya</h4>
+            <p>Team Leader
+              Full Stack Web Developer</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-xs team-member">
+        <div class="up">
+          <img src="../../../assets/team-user-svg.svg" class="team-logos">
+        </div>
+        <div class="down">
+          <div class="container">
+            <h4>Subham Bhattacharya</h4>
+            <p>Team Leader
+              Full Stack Web Developer</p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-</section>
+  <div class="team-down-bg"></div>
+</div>
+
+<div class="footer">
+  <div class="container text-white pt-4 pb-4">
+    <div class="row">
+      <div class="col-md-4 footer-divs m-auto">
+        <div class="container">
+          <p class="footer-title">Company Name</p>
+          <div class="line"></div>
+          <p>Here the user can see the minimilistic details of the website and what ever website and what
+          </p>
+        </div>
+      </div>
+      <div class="col-md-4 footer-divs m-auto">
+        <div class="container">
+          <p class="footer-title">Useful Links</p>
+          <div class="line"></div>
+          <a href="#">Your Accout</a><br>
+          <a href="#">Become affiliate</a><br>
+          <a href="#">Help</a><br>
+        </div>
+      </div>
+      <div class="col-md-4 footer-divs">
+        <div class="container">
+          <p class="footer-title">Contact</p>
+          <div class="line"></div>
+          <p class="contact-details">info@connect.com</p>
+          <p class="contact-details">Test,TEST,010201</p>
+          <p class="contact-details">+91 2256562569</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
