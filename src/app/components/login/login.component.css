@@ -36,6 +36,7 @@
   border-radius: 20px;
   -webkit-box-shadow: 6px 6px 28px -8px rgba(0,0,0,0.55);
   box-shadow: 6px 6px 28px -8px rgba(0,0,0,0.55);
+  position: relative;
 }
 .flex-center .login-window  .logo-div{
   margin-bottom:30px;
@@ -56,4 +57,12 @@
 }
 .width-100{
   width:100%;
+}
+.login-progress-spinner{
+  position: absolute;
+  top:40%;
+  left:34%;
+}
+mat-hint{
+  color:red !important;
 }

@@ -1,0 +1,58 @@
+<img src="./../../../assets/chat-app-bg.png" class="img-bg">
+<div class="w-90 root-window border">
+  <div class="row">
+    <div class="col-md-4 left-bar">
+      <div class="user-bar text-center">
+        <span class="ml-1 mr-4  current-user">{{currentUser.name}}</span>
+        <button mat-icon-button [matMenuTriggerFor]="menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item>
+            <mat-icon>supervised_user_circle</mat-icon>
+            <span class="mr-5">Profile</span>
+          </button>
+          <button mat-menu-item (click)="logout()">
+            <mat-icon>power_settings_new</mat-icon>
+            <span class="mr-5">Logout</span>
+          </button>
+        </mat-menu>
+      </div>
+      <div class="search-bar">
+        <input type="text" placeholder="Search for user" class="text-searchbar pl-5 pr-4">
+        <i class="material-icons search-icon">search</i>
+      </div>
+      <div class="online-user-list">
+        <div class="user p-2">
+          <i class="material-icons list-user-logo mr-2">supervised_user_circle</i>
+          <p class="list-user-name">Subham Bhattacharya</p>
+          <div class="green-dot"></div>
+        </div>
+
+      </div>
+    </div>
+    <div class="col-md-8 right-bar">
+      <div class="top-bar">
+        <div class="active-chat-user">
+          <i class="material-icons list-user-logo mr-2">supervised_user_circle</i>
+          <p class="list-user-name">Subham Bhattacharya</p>
+          <div class="green-dot ml-3"></div>
+        </div>
+      </div>
+      <div class="main-messages-window">
+        <div class="sender">
+          <p>Hey man whatsh up how you doing ?</p>
+        </div>
+        <div class="receiver mr-2">
+          <p>I am good what about you my man ?</p>
+        </div>
+      </div>
+      <div class="send-message-form mb-2">
+        <input type="text" name="msg" class="msg-input" placeholder="Enter Message" autocomplete="off"
+          [(ngModel)]="msgdata">
+        <i class="material-icons send-icon" (click)="send()">send</i>
+      </div>
+    </div>
+  </div>
+</div>
+<h1 class="text-align-center text-danger err text-left">IT IS A DESKTOP SITE </h1>

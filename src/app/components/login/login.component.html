@@ -6,24 +6,30 @@
       <div class="text-center logo-div">
         <img src="../../../assets/Logo.png">
       </div>
+      <form [formGroup]="loginForm">
+        <mat-form-field appearance="outline" class="width-100">
+          <mat-icon matSuffix>person</mat-icon>
+          <mat-label>Enter Username</mat-label>
+          <input matInput type="email" formControlName="email">
+          <mat-error *ngIf="loginForm.controls.email.status=='INVALID'">Please Enter a valid email</mat-error>
+        </mat-form-field>
 
-      <mat-form-field appearance="outline" class="width-100">
-        <mat-icon matSuffix>person</mat-icon>
-        <mat-label>Enter Username</mat-label>
-        <input matInput type="email">
-      </mat-form-field>
-
-      <mat-form-field appearance="outline" class="width-100">
-        <mat-icon matSuffix>security</mat-icon>
-        <mat-label>Enter Password</mat-label>
-        <input matInput type="password">
-      </mat-form-field>
-
-      <button mat-raised-button class="width-100 login-button">SIGNIN</button>
+        <mat-form-field appearance="outline" class="width-100">
+          <mat-icon matSuffix>security</mat-icon>
+          <mat-label>Enter Password</mat-label>
+          <input matInput type="password" formControlName="password">
+          <mat-error *ngIf="loginForm.controls.password.status=='INVALID'">Password is required</mat-error>
+          <mat-hint align="end" *ngIf="invalidcred.length>0">{{invalidcred}}</mat-hint>
+        </mat-form-field>
+      </form>
+      <button mat-raised-button class="width-100 login-button" (click)="userLogin()"
+        [disabled]="loginForm.status=='INVALID'">SIGNIN</button>
       <div class="text-center mt-5 mb-2">
         <p class="text-muted">Forgot Password? <a>Reset</a></p>
         <a class="create-new-account-link" [routerLink]="['/register']">create a new account</a>
       </div>
+      <mat-progress-spinner *ngIf="showProgressSpinner" mode="indeterminate" class="login-progress-spinner">
+      </mat-progress-spinner>
     </div>
   </div>
 </div>
