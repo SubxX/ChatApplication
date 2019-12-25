@@ -15,8 +15,7 @@ import { InterceptorService } from './interceptor/interceptor.service';
 @NgModule({
   declarations: [
     AppComponent,
-    Allroutes,
-    ChatapplicationComponent
+    Allroutes
   ],
   imports: [
     BrowserModule,

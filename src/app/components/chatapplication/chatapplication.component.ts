@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiServiceService } from '../../Api Methods/api-service.service';
 import { Router } from '@angular/router';
+import * as io from 'socket.io-client';
 
 @Component({
   selector: 'app-chatapplication',
@@ -9,11 +10,17 @@ import { Router } from '@angular/router';
 })
 export class ChatapplicationComponent implements OnInit {
   msgdata = '';
-  currentUser = { name: '', email: '' };
-  constructor(private api: ApiServiceService, private router: Router) { }
+  currentUser = { _id: '', name: '', email: '' };
+  onlineUsers = [];
+  messages = [];
+  socket;
+  constructor(private api: ApiServiceService, private router: Router) {
+    this.socket = io('http://localhost:3000');
+  }
 
   ngOnInit() {
     this.initLoggedUser();
+    this.getOnlineUsers();
   }
 
   initLoggedUser() {
@@ -28,13 +35,18 @@ export class ChatapplicationComponent implements OnInit {
         }
       );
   }
+  getOnlineUsers() {
+    this.api.getAllOnlineUsers()
+      .subscribe(
+        (data) => { this.onlineUsers = data; },
+        (err) => { console.log('something went wrong'); }
+      );
+  }
+  userChanged() {
+    this.socket.emit('refreshComponent', {});
+  }
   logout() {
     this.api.removeToken();
     this.router.navigate(['']);
   }
-  send() {
-    console.log(this.msgdata);
-    this.msgdata = '';
-  }
-
 }

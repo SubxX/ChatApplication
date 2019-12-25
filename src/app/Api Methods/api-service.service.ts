@@ -35,5 +35,18 @@ export class ApiServiceService {
   getUserFromToken() {
     return this.http.get<any>(this.apiLink + 'login/getuserfromtoken');
   }
+  // get All Online users
+  getAllOnlineUsers() {
+    return this.http.get<any>(this.apiLink + 'login/getOnlineUsers');
+  }
+  getMessages(sender, receiver) {
+    return this.http.get<any>(this.apiLink + 'chat/getmessages/' + sender + '/' + receiver);
+  }
+  sendMessage(obj) {
+    return this.http.post<any>(this.apiLink + 'chat', obj);
+  }
+  getUserDetailsbyId(id) {
+    return this.http.get<any>(this.apiLink + 'login/getaUserByid/' + id);
+  }
 
 }

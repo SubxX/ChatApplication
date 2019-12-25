@@ -6,13 +6,17 @@ import { NotfoundpageComponent } from './components/notfoundpage/notfoundpage.co
 import { VerificationSentComponent } from './components/register/verification-sent/verification-sent.component';
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { ChatapplicationComponent } from './components/chatapplication/chatapplication.component';
+import { ChatwindowComponent } from './components/chatapplication/chatwindow/chatwindow.component';
 import { AuthGuard } from './authguard/auth.guard';
 
 const routes: Routes = [
   { path: '', component: HomePageComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'chatapplication', component: ChatapplicationComponent, canActivate: [AuthGuard] },
+  {
+    path: 'chatapplication', component: ChatapplicationComponent, canActivate: [AuthGuard],
+    children: [{ path: ':sender/:receiver', component: ChatwindowComponent }]
+  },
   { path: '**', component: NotfoundpageComponent }
 ];
 
@@ -21,4 +25,12 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
-export const Allroutes = [LoginComponent, RegisterComponent, NotfoundpageComponent, VerificationSentComponent, HomePageComponent];
+export const Allroutes = [
+  LoginComponent,
+  RegisterComponent,
+  NotfoundpageComponent,
+  VerificationSentComponent,
+  HomePageComponent,
+  ChatapplicationComponent,
+  ChatwindowComponent
+];

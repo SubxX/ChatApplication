@@ -23,35 +23,18 @@
         <i class="material-icons search-icon">search</i>
       </div>
       <div class="online-user-list">
-        <div class="user p-2">
-          <i class="material-icons list-user-logo mr-2">supervised_user_circle</i>
-          <p class="list-user-name">Subham Bhattacharya</p>
-          <div class="green-dot"></div>
-        </div>
-
+        <span *ngFor="let user of onlineUsers">
+          <div class="user p-2" (click)="userChanged()"
+            [routerLink]="['/chatapplication/', this.currentUser._id, user._id]" routerLinkActive="active-chat">
+            <i class="material-icons list-user-logo mr-2">supervised_user_circle</i>
+            <p class="list-user-name">{{user.name}}</p>
+            <div class="green-dot"></div>
+          </div>
+        </span>
       </div>
     </div>
     <div class="col-md-8 right-bar">
-      <div class="top-bar">
-        <div class="active-chat-user">
-          <i class="material-icons list-user-logo mr-2">supervised_user_circle</i>
-          <p class="list-user-name">Subham Bhattacharya</p>
-          <div class="green-dot ml-3"></div>
-        </div>
-      </div>
-      <div class="main-messages-window">
-        <div class="sender">
-          <p>Hey man whatsh up how you doing ?</p>
-        </div>
-        <div class="receiver mr-2">
-          <p>I am good what about you my man ?</p>
-        </div>
-      </div>
-      <div class="send-message-form mb-2">
-        <input type="text" name="msg" class="msg-input" placeholder="Enter Message" autocomplete="off"
-          [(ngModel)]="msgdata">
-        <i class="material-icons send-icon" (click)="send()">send</i>
-      </div>
+      <router-outlet></router-outlet>
     </div>
   </div>
 </div>
