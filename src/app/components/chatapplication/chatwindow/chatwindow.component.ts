@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiServiceService } from '../../../Api Methods/api-service.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import * as io from 'socket.io-client'
+import * as io from 'socket.io-client';
 
 @Component({
   selector: 'app-chatwindow',

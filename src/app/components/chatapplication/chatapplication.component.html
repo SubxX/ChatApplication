@@ -4,19 +4,6 @@
     <div class="col-md-4 left-bar">
       <div class="user-bar text-center">
         <span class="ml-1 mr-4  current-user">{{currentUser.name}}</span>
-        <button mat-icon-button [matMenuTriggerFor]="menu">
-          <mat-icon>more_vert</mat-icon>
-        </button>
-        <mat-menu #menu="matMenu">
-          <button mat-menu-item>
-            <mat-icon>supervised_user_circle</mat-icon>
-            <span class="mr-5">Profile</span>
-          </button>
-          <button mat-menu-item (click)="logout()">
-            <mat-icon>power_settings_new</mat-icon>
-            <span class="mr-5">Logout</span>
-          </button>
-        </mat-menu>
       </div>
       <div class="search-bar">
         <input type="text" placeholder="Search for user" class="text-searchbar pl-5 pr-4">
@@ -31,6 +18,20 @@
             <div class="green-dot"></div>
           </div>
         </span>
+
+        <button mat-icon-button [matMenuTriggerFor]="menu" class="setting-btn">
+          <i class="fa fa-cog" aria-hidden="true"></i>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item>
+            <mat-icon>supervised_user_circle</mat-icon>
+            <span class="mr-5">Profile</span>
+          </button>
+          <button mat-menu-item (click)="logout()">
+            <mat-icon>power_settings_new</mat-icon>
+            <span class="mr-5">Logout</span>
+          </button>
+        </mat-menu>
       </div>
     </div>
     <div class="col-md-8 right-bar">

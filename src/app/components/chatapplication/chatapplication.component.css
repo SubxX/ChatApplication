@@ -9,16 +9,18 @@
 	margin:auto;
 	margin-top: 30px;
 	background-color: #C4C4C4;
-	border-radius: 20px;
+  -webkit-box-shadow: -1px 1px 20px -8px rgba(0,0,0,0.55);
+  -moz-box-shadow: -1px 1px 20px -8px rgba(0,0,0,0.55);
+  box-shadow: -1px 1px 20px -8px rgba(0,0,0,0.55);
 }
 .w-90{
-	width:90%;
+	width:80%;
 }
 .left-bar{
 	border-right:1px solid rgba(51, 51, 51, 0.274);
 }
 .user-bar{
-	padding: 12px 0;
+	padding: 18px 0;
   border-bottom: 1px solid rgba(51, 51, 51, 0.315);
 }
 .current-user{
@@ -54,7 +56,21 @@
 	width:100%;
 	height: 78vh;
 	overflow-y: auto;
-	overflow-x: hidden;
+  overflow-x: hidden;
+  position: relative;
+}
+.setting-btn{
+  position: absolute;
+  bottom: 20px;
+  right:15px;
+  outline:none;
+}
+.fa-cog{
+  font-size: 50px;
+  transition: 0.5s;
+}
+.fa-cog:hover{
+  transform: rotate(20deg);
 }
 .user{
 	background:#fff;

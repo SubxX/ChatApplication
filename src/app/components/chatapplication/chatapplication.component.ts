@@ -28,6 +28,7 @@ export class ChatapplicationComponent implements OnInit {
       .subscribe(
         (user) => {
           this.currentUser = user;
+          this.router.navigate(['/chatapplication/welcome']);
         },
         (err) => {
           console.log('user not loggedin');

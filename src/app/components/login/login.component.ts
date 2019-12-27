@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
             localStorage.setItem('authtoken', res.token);
             setTimeout(() => {
               this.showProgressSpinner = false;
-              this.router.navigate(['/chatapplication']);
+              this.router.navigate(['/chatapplication/welcome']);
             }, 2000);
           },
           (err) => {

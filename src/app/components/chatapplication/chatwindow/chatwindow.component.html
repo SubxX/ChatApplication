@@ -17,6 +17,6 @@
 </div>
 <div class="send-message-form mb-2">
   <input type="text" name="msg" class="msg-input" placeholder="Enter Message" autocomplete="off" [(ngModel)]="msgData">
-  <button class="send-button" (click)="sendMessage()" [disabled]="!msgData"><i
+  <button mat-icon-button class="send-button" (click)="sendMessage()" [disabled]="!msgData"><i
       class="material-icons send-icon">send</i></button>
 </div>

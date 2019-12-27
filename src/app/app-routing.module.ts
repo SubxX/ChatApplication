@@ -7,6 +7,7 @@ import { VerificationSentComponent } from './components/register/verification-se
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { ChatapplicationComponent } from './components/chatapplication/chatapplication.component';
 import { ChatwindowComponent } from './components/chatapplication/chatwindow/chatwindow.component';
+import { InitViewComponent } from './components/chatapplication/init-view/init-view.component';
 import { AuthGuard } from './authguard/auth.guard';
 
 const routes: Routes = [
@@ -15,7 +16,10 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   {
     path: 'chatapplication', component: ChatapplicationComponent, canActivate: [AuthGuard],
-    children: [{ path: ':sender/:receiver', component: ChatwindowComponent }]
+    children: [
+      { path: 'welcome', component: InitViewComponent },
+      { path: ':sender/:receiver', component: ChatwindowComponent }
+    ]
   },
   { path: '**', component: NotfoundpageComponent }
 ];
@@ -32,5 +36,6 @@ export const Allroutes = [
   VerificationSentComponent,
   HomePageComponent,
   ChatapplicationComponent,
-  ChatwindowComponent
+  ChatwindowComponent,
+  InitViewComponent
 ];
