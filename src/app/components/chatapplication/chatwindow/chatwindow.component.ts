@@ -78,7 +78,6 @@ export class ChatwindowComponent implements OnInit {
   }
 
   // Send message
-
   sendMessage() {
     if (this.msgData) {
       const smsBody = {
@@ -94,6 +93,7 @@ export class ChatwindowComponent implements OnInit {
             this.socket.emit('msgrefresh', {});
           },
           (err) => {
+            console.log(err);
             console.log('somethign went wrong while sending messages');
           }
         );
@@ -103,8 +103,13 @@ export class ChatwindowComponent implements OnInit {
     }
   }
 
+  // Send message using Enter
+  enterKey(e) {
+    if (e.which === 13) {
+      this.sendMessage();
+    } else {
+      return false;
+    }
+  }
+
 }
-/*
-
-
-*/

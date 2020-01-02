@@ -7,26 +7,41 @@
         <div class="user-details">
           <img src="../../../assets/user.svg" class="user-logo">
           <span class="font-weight-light">{{currentUser.name}}</span>
+          <button mat-icon-button [matMenuTriggerFor]="menu" class="settings-logo-btn">
+            <img src="../../../assets/settings.svg" class="settings-logo">
+          </button>
         </div>
       </div>
       <div class="search-box">
-        <button mat-icon-button [matMenuTriggerFor]="menu" class="settings-logo-btn">
-          <img src="../../../assets/settings.svg" class="settings-logo">
-        </button>
         <div class="search-bar">
-          <input type="text" class="search-bar-input" placeholder="search here">
+          <input type="text" class="search-bar-input" placeholder="search here" [(ngModel)]="searchData"
+            (keyup)="searchUser()">
           <img src="../../../assets/searchicon.svg" class="search-icon">
         </div>
       </div>
       <div class="online-users">
-        <span *ngFor="let user of onlineUsers">
-          <div class="user" (click)="userChanged()" [routerLink]="['/chatapplication/', this.currentUser._id, user._id]"
-            routerLinkActive="user-active">
-            <img src="../../../assets/online-user-logo.svg">
-            <span>{{user.name}}</span>
-            <div class="status"></div>
-          </div>
+        <span *ngIf="filterUser.length===0">
+          <span *ngFor="let user of onlineUsers">
+            <div class="user" (click)="userChanged()"
+              [routerLink]="['/chatapplication/', this.currentUser._id, user._id]" routerLinkActive="user-active">
+              <img src="../../../assets/online-user-logo.svg">
+              <span>{{user.name}}</span>
+              <div class="status"></div>
+            </div>
+          </span>
         </span>
+
+        <span *ngIf="filterUser.length>0">
+          <span *ngFor="let user of filterUser">
+            <div class="user" (click)="userChanged()"
+              [routerLink]="['/chatapplication/', this.currentUser._id, user._id]" routerLinkActive="user-active">
+              <img src="../../../assets/online-user-logo.svg">
+              <span>{{user.name}}</span>
+              <div class="status"></div>
+            </div>
+          </span>
+        </span>
+
       </div>
     </div>
 

@@ -14,6 +14,8 @@ export class ChatapplicationComponent implements OnInit {
   onlineUsers = [];
   messages = [];
   socket;
+  searchData;
+  filterUser = [];
   constructor(private api: ApiServiceService, private router: Router) {
     this.socket = io('http://localhost:3000');
   }
@@ -45,9 +47,26 @@ export class ChatapplicationComponent implements OnInit {
   }
   userChanged() {
     this.socket.emit('refreshComponent', {});
+    this.filterUser = [];
+    this.searchData = '';
   }
   logout() {
     this.api.removeToken();
     this.router.navigate(['']);
   }
+  searchUser() {
+    if (this.searchData !== undefined) {
+      this.filterUser = this.onlineUsers.filter((item) => {
+        if (item.name.toLowerCase() !== this.searchData.toLowerCase()) {
+          return false;
+        }
+        return true;
+      });
+    } else {
+      return false;
+    }
+  }
+
+
+
 }

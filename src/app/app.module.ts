@@ -11,6 +11,7 @@ import { ApiServiceService } from './Api Methods/api-service.service';
 import { ChatapplicationComponent } from './components/chatapplication/chatapplication.component';
 import { AuthGuard } from './authguard/auth.guard';
 import { InterceptorService } from './interceptor/interceptor.service';
+import { NgxAutoScrollModule } from 'ngx-auto-scroll';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { InterceptorService } from './interceptor/interceptor.service';
     ReactiveFormsModule,
     BrowserAnimationsModule,
     MaterialModule,
-    HttpClientModule
+    HttpClientModule,
+    NgxAutoScrollModule
   ],
   providers: [ApiServiceService, AuthGuard, {
     provide: HTTP_INTERCEPTORS,

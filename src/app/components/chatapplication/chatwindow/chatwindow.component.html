@@ -5,25 +5,26 @@
     <span class="active-chat"></span>
   </div>
 </div>
-<div class="msg-thread">
+<div class="msg-thread" ngx-auto-scroll lock-y-offset="10" observe-attributes>
   <span *ngFor="let msg of messages">
 
     <div class="sender mt-2 mb-2" *ngIf="msg.sender!=currentUser.name">
       <p>{{msg.msgBody}}</p>
-      <small class="time">3.41 AM</small>
+      <small class="time">{{msg.date.substr(11,5)}}</small>
       <i class="material-icons unseen-icon">done</i>
     </div>
 
     <div class="receiver mt-2 mb-2" *ngIf="msg.sender==currentUser.name">
       <p>{{msg.msgBody}}</p>
-      <small class="time">3.40 AM</small>
+      <small class="time">{{msg.date.substr(11,5)}}</small>
       <i class="material-icons seen-icon">done_all</i>
     </div>
 
   </span>
 </div>
 <div class="input-box-message">
-  <input type="text" name="msg" class="msg-input" placeholder="enter message" autocomplete="off" [(ngModel)]="msgData">
+  <input type="text" name="msg" class="msg-input" placeholder="enter message" autocomplete="off" [(ngModel)]="msgData"
+    (keyup)="enterKey($event)">
   <button mat-icon-button class="send-button" (click)="sendMessage()" [disabled]="!msgData">
     <i class="material-icons send-icon">send</i>
   </button>
