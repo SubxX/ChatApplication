@@ -1,22 +1,30 @@
-<div class="top-bar">
-  <div class="active-chat-user">
-    <i class="material-icons list-user-logo mr-2">supervised_user_circle</i>
-    <p class="list-user-name">{{receiverUser.name}}</p>
-    <div class="green-dot ml-3"></div>
+<div class="current-msg-person flex-center">
+  <div class="text-center flex-center">
+    <img src="../../../../assets/online-user-logo.svg">
+    <span class="active-chat-name">{{receiverUser.name}}</span>
+    <span class="active-chat"></span>
   </div>
 </div>
-<div class="main-messages-window">
+<div class="msg-thread">
   <span *ngFor="let msg of messages">
-    <div class="sender" *ngIf="msg.sender==currentUser.name">
+
+    <div class="sender mt-2 mb-2" *ngIf="msg.sender!=currentUser.name">
       <p>{{msg.msgBody}}</p>
+      <small class="time">3.41 AM</small>
+      <i class="material-icons unseen-icon">done</i>
     </div>
-    <div class="receiver mr-2" *ngIf="msg.sender!=currentUser.name">
+
+    <div class="receiver mt-2 mb-2" *ngIf="msg.sender==currentUser.name">
       <p>{{msg.msgBody}}</p>
+      <small class="time">3.40 AM</small>
+      <i class="material-icons seen-icon">done_all</i>
     </div>
+
   </span>
 </div>
-<div class="send-message-form mb-2">
-  <input type="text" name="msg" class="msg-input" placeholder="Enter Message" autocomplete="off" [(ngModel)]="msgData">
-  <button mat-icon-button class="send-button" (click)="sendMessage()" [disabled]="!msgData"><i
-      class="material-icons send-icon">send</i></button>
+<div class="input-box-message">
+  <input type="text" name="msg" class="msg-input" placeholder="enter message" autocomplete="off" [(ngModel)]="msgData">
+  <button mat-icon-button class="send-button" (click)="sendMessage()" [disabled]="!msgData">
+    <i class="material-icons send-icon">send</i>
+  </button>
 </div>

@@ -1,7 +1,62 @@
 <img src="./../../../assets/chat-app-bg.png" class="img-bg">
-<div class="w-90 root-window border">
-  <div class="row">
-    <div class="col-md-4 left-bar">
+<div class="root">
+  <div class="main-window">
+
+    <div class="left-side">
+      <div class="user-bar p-2">
+        <div class="user-details">
+          <img src="../../../assets/user.svg" class="user-logo">
+          <span class="font-weight-light">{{currentUser.name}}</span>
+        </div>
+      </div>
+      <div class="search-box">
+        <button mat-icon-button [matMenuTriggerFor]="menu" class="settings-logo-btn">
+          <img src="../../../assets/settings.svg" class="settings-logo">
+        </button>
+        <div class="search-bar">
+          <input type="text" class="search-bar-input" placeholder="search here">
+          <img src="../../../assets/searchicon.svg" class="search-icon">
+        </div>
+      </div>
+      <div class="online-users">
+        <span *ngFor="let user of onlineUsers">
+          <div class="user" (click)="userChanged()" [routerLink]="['/chatapplication/', this.currentUser._id, user._id]"
+            routerLinkActive="user-active">
+            <img src="../../../assets/online-user-logo.svg">
+            <span>{{user.name}}</span>
+            <div class="status"></div>
+          </div>
+        </span>
+      </div>
+    </div>
+
+    <div class=" right-bar">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
+
+<!--Menu for users-->
+<mat-menu #menu="matMenu">
+  <button mat-menu-item>
+    <mat-icon>supervised_user_circle</mat-icon>
+    <span class="mr-5">Profile</span>
+  </button>
+  <button mat-menu-item (click)="logout()">
+    <mat-icon>power_settings_new</mat-icon>
+    <span class="mr-5">Logout</span>
+  </button>
+</mat-menu>
+
+<!--Resolution Error-->
+<h1 class="text-align-center text-danger err text-left">IT IS A DESKTOP SITE </h1>
+
+<!--
+
+
+
+
+    <div class=" left-bar">
       <div class="user-bar text-center">
         <span class="ml-1 mr-4  current-user">{{currentUser.name}}</span>
       </div>
@@ -34,9 +89,4 @@
         </mat-menu>
       </div>
     </div>
-    <div class="col-md-8 right-bar">
-      <router-outlet></router-outlet>
-    </div>
-  </div>
-</div>
-<h1 class="text-align-center text-danger err text-left">IT IS A DESKTOP SITE </h1>
+-->
