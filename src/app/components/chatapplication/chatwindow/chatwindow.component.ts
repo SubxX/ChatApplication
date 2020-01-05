@@ -12,7 +12,7 @@ export class ChatwindowComponent implements OnInit {
   receiverId;
   senderId;
   currentUser = { _id: '', name: '' };
-  receiverUser = { _id: '', name: '' };
+  receiverUser = { _id: '', name: '', profilepic: '' };
   messages = [];
   socket;
   msgData;

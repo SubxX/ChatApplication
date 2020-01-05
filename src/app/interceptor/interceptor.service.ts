@@ -10,9 +10,7 @@ export class InterceptorService implements HttpInterceptor {
   constructor(private api: ApiServiceService) { }
   intercept(req, next) {
     const token = this.api.getToken();
-    const headersConfig = {
-      'Content-Type': 'application/json'
-    };
+    const headersConfig = {};
     if (token) {
       headersConfig['authorization'] = token;
     }

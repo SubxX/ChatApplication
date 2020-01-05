@@ -1,11 +1,17 @@
 <div class="current-msg-person flex-center">
   <div class="text-center flex-center">
-    <img src="../../../../assets/online-user-logo.svg">
+    <!--<img *ngif="!receiverUser.profilepic" src="../../../../assets/online-user-logo.svg">-->
+    <img *ngIf="!receiverUser.profilepic" src="../../../../assets/online-user-logo.svg">
+    <img *ngIf="receiverUser.profilepic" src="data:image/png;base64,{{receiverUser.profilepic}}"
+      class="active-chat-logo">
     <span class="active-chat-name">{{receiverUser.name}}</span>
     <span class="active-chat"></span>
   </div>
 </div>
 <div class="msg-thread" ngx-auto-scroll lock-y-offset="10" observe-attributes>
+  <div *ngIf="messages.length==0" class="center">
+    <span class="text-white title-text">No Messages! send a Message now ?</span>
+  </div>
   <span *ngFor="let msg of messages">
 
     <div class="sender mt-2 mb-2" *ngIf="msg.sender!=currentUser.name">

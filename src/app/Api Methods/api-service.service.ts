@@ -48,5 +48,11 @@ export class ApiServiceService {
   getUserDetailsbyId(id) {
     return this.http.get<any>(this.apiLink + 'login/getaUserByid/' + id);
   }
+  getProfilePicture() {
+    return this.http.get<any>(this.apiLink + 'login/getprofilepic');
+  }
+  updateProfilePicture(body) {
+    return this.http.post<any>(this.apiLink + 'login/uploadprofilepic', body);
+  }
 
 }

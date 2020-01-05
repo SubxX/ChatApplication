@@ -16,6 +16,7 @@ export class ChatapplicationComponent implements OnInit {
   socket;
   searchData;
   filterUser = [];
+  profilePic;
   constructor(private api: ApiServiceService, private router: Router) {
     this.socket = io('http://localhost:3000');
   }
@@ -23,6 +24,10 @@ export class ChatapplicationComponent implements OnInit {
   ngOnInit() {
     this.initLoggedUser();
     this.getOnlineUsers();
+    this.initUserProfilePic();
+    this.socket.on('upProfilePic', (data) => {
+      this.initUserProfilePic();
+    });
   }
 
   initLoggedUser() {
@@ -38,6 +43,18 @@ export class ChatapplicationComponent implements OnInit {
         }
       );
   }
+  initUserProfilePic() {
+    this.api.getProfilePicture()
+      .subscribe(
+        (data) => {
+          this.profilePic = 'data:image/png;base64,' + data;
+        },
+        (err) => {
+          this.profilePic = '';
+        }
+      );
+  }
+
   getOnlineUsers() {
     this.api.getAllOnlineUsers()
       .subscribe(

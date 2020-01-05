@@ -5,7 +5,8 @@
     <div class="left-side">
       <div class="user-bar p-2">
         <div class="user-details">
-          <img src="../../../assets/user.svg" class="user-logo">
+          <img *ngIf="profilePic" [src]="profilePic" class="user-logo" [routerLink]="['/chatapplication/myprofile']">
+          <img *ngIf="!profilePic" src="../../../assets/user.svg" class="user-logo">
           <span class="font-weight-light">{{currentUser.name}}</span>
           <button mat-icon-button [matMenuTriggerFor]="menu" class="settings-logo-btn">
             <img src="../../../assets/settings.svg" class="settings-logo">
@@ -24,7 +25,8 @@
           <span *ngFor="let user of onlineUsers">
             <div class="user" (click)="userChanged()"
               [routerLink]="['/chatapplication/', this.currentUser._id, user._id]" routerLinkActive="user-active">
-              <img src="../../../assets/online-user-logo.svg">
+              <img *ngIf="!user.profilepic" src="../../../assets/online-user-logo.svg">
+              <img *ngIf="user.profilepic" src="data:image/png;base64,{{user.profilepic}}" class="on-user-logo">
               <span>{{user.name}}</span>
               <div class="status"></div>
             </div>
@@ -35,7 +37,8 @@
           <span *ngFor="let user of filterUser">
             <div class="user" (click)="userChanged()"
               [routerLink]="['/chatapplication/', this.currentUser._id, user._id]" routerLinkActive="user-active">
-              <img src="../../../assets/online-user-logo.svg">
+              <img *ngIf="!user.profilepic" src="../../../assets/online-user-logo.svg">
+              <img *ngIf="user.profilepic" src="data:image/png;base64,{{user.profilepic}}" class="on-user-logo">
               <span>{{user.name}}</span>
               <div class="status"></div>
             </div>
@@ -53,7 +56,7 @@
 
 <!--Menu for users-->
 <mat-menu #menu="matMenu">
-  <button mat-menu-item>
+  <button mat-menu-item [routerLink]="['/chatapplication/myprofile']">
     <mat-icon>supervised_user_circle</mat-icon>
     <span class="mr-5">Profile</span>
   </button>
