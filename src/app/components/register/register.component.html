@@ -6,7 +6,7 @@
         <img src="../../../assets/Logo.png">
       </div>
 
-      <div [formGroup]="registerForm">
+      <div [formGroup]="registerForm" (keyup)="regesterOnEnterKey($event)">
 
         <mat-form-field appearance="outline" class="width-100">
           <mat-label>Enter Name</mat-label>

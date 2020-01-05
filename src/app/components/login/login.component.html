@@ -6,7 +6,7 @@
       <div class="text-center logo-div">
         <img src="../../../assets/Logo.png">
       </div>
-      <form [formGroup]="loginForm">
+      <form [formGroup]="loginForm" (keyup)="enterKeytoLogin($event)">
         <mat-form-field appearance="outline" class="width-100">
           <mat-icon matSuffix>person</mat-icon>
           <mat-label>Enter Username</mat-label>

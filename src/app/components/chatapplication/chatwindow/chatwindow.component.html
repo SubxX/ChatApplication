@@ -34,4 +34,8 @@
   <button mat-icon-button class="send-button" (click)="sendMessage()" [disabled]="!msgData">
     <i class="material-icons send-icon">send</i>
   </button>
+  <button mat-icon-button class="attachment-btn">
+    <i class="material-icons attach-file-icon" (click)="file.click()">attach_file</i>
+  </button>
+  <input type="file" hidden #file (change)="attachFiles($event)">
 </div>

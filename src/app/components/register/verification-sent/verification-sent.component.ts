@@ -18,13 +18,13 @@ export class VerificationSentComponent implements OnInit {
   }
 
   confirmEmail() {
-    const objBody = { email: this.email, emailValid: this.codeValue };
+    const objBody = { email: this.email, emailValid: this.codeValue.toUpperCase() };
     this.api.confirmEmail(objBody).subscribe(
       (res) => {
         this.isSuccess = true;
         setTimeout(() => {
           this.route.navigate(['/login']);
-        }, 5000);
+        }, 3000);
       },
       (err) => {
         this.err = 'INVALID';
@@ -35,4 +35,12 @@ export class VerificationSentComponent implements OnInit {
       }
     );
   }
+  enterKey(e) {
+    if (e.keyCode === 13 && this.codeValue.length === 6) {
+      this.confirmEmail();
+    } else {
+      return false;
+    }
+  }
+
 }

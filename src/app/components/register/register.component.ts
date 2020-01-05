@@ -48,7 +48,14 @@ export class RegisterComponent implements OnInit {
     } else {
       console.log(this.registerForm);
     }
+  }
 
+  regesterOnEnterKey(e) {
+    if (e.keyCode === 13 && this.registerForm.status === 'VALID') {
+      this.userRegister();
+    } else {
+      return false;
+    }
   }
 
 }

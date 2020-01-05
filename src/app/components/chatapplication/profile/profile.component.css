@@ -1,3 +1,7 @@
+.over-flow{
+  overflow-y: auto;
+  height:80vh;
+}
 .width-100{
   width: 100% !important;
 }
@@ -18,6 +22,7 @@
   width:100%;
   height:9%;
   border-bottom: 1px solid rgba(51, 51, 51, 0.219);
+  padding: 1px 0;
 }
 .logo{
   width:130px;
@@ -58,4 +63,26 @@ button{
 .flex{
   display: flex;
   align-items: center;
+}
+.font-size-toggle{
+  font-size: 40px !important;
+}
+.margin-btm{
+  margin-bottom: 64px;
+}
+
+
+::-webkit-scrollbar {
+	width: 12px;
+}
+::-webkit-scrollbar-track {
+	box-shadow: inset 0 0 5px grey;
+	border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+	background: grey;
+	border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+	background: rgb(90, 90, 90);
 }

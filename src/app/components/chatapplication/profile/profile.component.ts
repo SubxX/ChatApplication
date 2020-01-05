@@ -15,7 +15,12 @@ export class ProfileComponent implements OnInit {
   profilepic;
   currentUser = { name: '', email: '', nickname: '', password: '' };
   socket;
-
+  userConfig = {
+    showNameonTop: true,
+    showNicknameonTop: true,
+    searchbar: true,
+    latestupdates: false
+  };
   constructor(private fb: FormBuilder, private api: ApiServiceService, private router: Router) {
     this.socket = io('http://localhost:3000');
   }
@@ -84,5 +89,7 @@ export class ProfileComponent implements OnInit {
   toogleVisibility() {
     this.isVisible = !this.isVisible;
   }
-
+  updateConfig() {
+    console.log(this.userConfig);
+  }
 }

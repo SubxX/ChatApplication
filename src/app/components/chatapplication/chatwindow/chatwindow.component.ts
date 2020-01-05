@@ -111,5 +111,9 @@ export class ChatwindowComponent implements OnInit {
       return false;
     }
   }
+  // attach files
+  attachFiles(e) {
+    console.log(e.target.files[0]);
+  }
 
 }

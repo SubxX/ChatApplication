@@ -38,8 +38,8 @@ export class LoginComponent implements OnInit {
             }, 2000);
           },
           (err) => {
-            console.log(err.error.loginerr);
             this.invalidcred = 'invalid credentials';
+            this.loginForm.controls.password.setValue('');
             setTimeout(() => {
               this.invalidcred = '';
             }, 3000);
@@ -47,4 +47,14 @@ export class LoginComponent implements OnInit {
         );
     }
   }
+  enterKeytoLogin(e) {
+    if (e.keyCode === 13 && this.loginForm.status !== 'INVALID') {
+      this.userLogin();
+    } else {
+      return false;
+    }
+  }
+
+
+
 }

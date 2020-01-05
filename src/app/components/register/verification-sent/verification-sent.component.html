@@ -20,7 +20,7 @@
         <div class="container mb-4">
           <mat-form-field>
             <mat-label>CODE</mat-label>
-            <input matInput name="code" autocomplete="off" [(ngModel)]="codeValue">
+            <input matInput name="code" autocomplete="off" [(ngModel)]="codeValue" (keyup)="enterKey($event)">
             <button matSuffix mat-icon-button color="primary" *ngIf="codeValue.length==6" (click)="confirmEmail()">
               <mat-icon>subdirectory_arrow_left</mat-icon>
             </button>

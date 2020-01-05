@@ -1,10 +1,12 @@
 <div class="container-fluid">
-  <div class="title text-center mb-2">
-    <img src="../../../../assets/Logo.png" class="logo  mt-1">
+  <div class="title text-center mb-2 mt-1">
+    <img src="../../../../assets/Logo.png" class="logo">
     <span class="text-secondary title-text">PROFILE</span>
   </div>
+</div>
+<div class="container-fluid over-flow">
 
-  <div class="container text-center profile-pic">
+  <div class="container text-center profile-pic mt-1">
     <img *ngIf="profilepic" [src]="profilepic" class="profile-pic-box">
     <img *ngIf="!profilepic" src="../../../../assets/user.svg" class="profile-pic-box">
     <input type="file" hidden #file (change)="changeProfilepic($event)">
@@ -12,47 +14,83 @@
       <mat-icon>create</mat-icon>
     </button>
   </div>
-  <div class="container-fluid mt-1">
 
-    <div class="row mt-4">
-      <div class="col-md-6">
-        <p class="text-center font-weight-light font-size">EDIT PROFILE</p>
-        <form [formGroup]="profilEditForm">
-          <mat-form-field class="width-100">
-            <input matInput type="text" placeholder="Name" formControlName="name">
-          </mat-form-field>
-          <mat-form-field class="width-100">
-            <input matInput type="text" placeholder="Nickname" formControlName="nickname">
-          </mat-form-field>
-          <mat-form-field class="width-100">
-            <input matInput type="text" placeholder="Email" formControlName="email">
-          </mat-form-field>
-          <mat-form-field class="width-100">
-            <input matInput [type]="isVisible ? 'text' : 'password'" placeholder="New Password"
-              formControlName="password">
-            <button mat-icon-button matSuffix (click)="toogleVisibility()">
-              <mat-icon>{{isVisible? 'visibility': 'visibility_off'}}</mat-icon>
-            </button>
-          </mat-form-field>
-        </form>
-        <button class="btn btn-light mt-3" (click)="saveChanges()">Save Changes</button>
-      </div>
+  <div class="row mt-4 margin-btm">
+    <div class="col-md-6">
+      <p class="text-center font-weight-light font-size">EDIT PROFILE</p>
+      <form [formGroup]="profilEditForm">
+        <mat-form-field class="width-100">
+          <input matInput type="text" placeholder="Name" formControlName="name">
+        </mat-form-field>
+        <mat-form-field class="width-100">
+          <input matInput type="text" placeholder="Nickname" formControlName="nickname">
+        </mat-form-field>
+        <mat-form-field class="width-100">
+          <input matInput type="text" placeholder="Email" formControlName="email">
+        </mat-form-field>
+        <mat-form-field class="width-100">
+          <input matInput [type]="isVisible ? 'text' : 'password'" placeholder="New Password"
+            formControlName="password">
+          <button mat-icon-button matSuffix (click)="toogleVisibility()">
+            <mat-icon>{{isVisible? 'visibility': 'visibility_off'}}</mat-icon>
+          </button>
+        </mat-form-field>
+      </form>
+      <button class="btn btn-light btn-block mt-3" (click)="saveChanges()">Save Changes</button>
+    </div>
 
-      <div class="col-md-6">
-        <div class="box">
-          <p class="text-center font-weight-light font-size mb-5">PROFILE INFO</p>
-          <p class="font-weight-400 text-muted">Name</p>
-          <p>{{currentUser.name}}</p>
-          <p class="font-weight-400 text-muted">NickName</p>
-          <p>{{currentUser.nickname}}</p>
-          <p class="font-weight-400 text-muted">Email</p>
-          <div class="flex">
-            <p>{{currentUser.email}}</p>
-            <i class="material-icons ml-2 verefied text-success">check_circle</i>
-          </div>
+    <div class="col-md-6">
+      <div class="box">
+        <p class="text-center font-weight-light font-size mb-5">PROFILE INFO</p>
+        <p class="font-weight-400 text-muted">Name</p>
+        <p>{{currentUser.name}}</p>
+        <p class="font-weight-400 text-muted">NickName</p>
+        <p>{{currentUser.nickname}}</p>
+        <p class="font-weight-400 text-muted">Email</p>
+        <div class="flex">
+          <p>{{currentUser.email}}</p>
+          <i class="material-icons ml-2 verefied text-success">check_circle</i>
         </div>
       </div>
+    </div>
+  </div>
 
+  <hr>
+  <div class="container-fluid mt-4 mb-3">
+    <p class="text-center font-weight-light font-size">PROFILE CONFIG</p>
+    <div class="row">
+      <div class="col-md-8">
+        <p class="text-left mt-1">Show Name on top Left bar</p>
+        <p class="text-left mt-1">Show NickName on top Left bar</p>
+        <p class="text-left mt-1">Enable Searchbar</p>
+        <p class="text-left mt-1">Get latest emails</p>
+      </div>
+      <div class="col-md-4 text-center">
+        <button mat-icon-button (click)="userConfig.showNameonTop = ! userConfig.showNameonTop"
+          (click)="updateConfig()">
+          <mat-icon [ngStyle]="userConfig.showNameonTop ? {'color':'#428bca'} : {'color':'black'}"
+            class="font-size-toggle">{{userConfig.showNameonTop ? 'toggle_on':'toggle_off'}}
+          </mat-icon>
+        </button><br>
+        <button mat-icon-button (click)="userConfig.showNicknameonTop = ! userConfig.showNicknameonTop"
+          (click)="updateConfig()">
+          <mat-icon [ngStyle]="userConfig.showNicknameonTop ? {'color':'#428bca'} : {'color':'black'}"
+            class="font-size-toggle">{{userConfig.showNicknameonTop ? 'toggle_on':'toggle_off'}}
+          </mat-icon>
+        </button><br>
+        <button mat-icon-button (click)="userConfig.searchbar = ! userConfig.searchbar" (click)="updateConfig()">
+          <mat-icon [ngStyle]="userConfig.searchbar ? {'color':'#428bca'} : {'color':'black'}" class="font-size-toggle">
+            {{userConfig.searchbar ? 'toggle_on':'toggle_off'}}
+          </mat-icon>
+        </button><br>
+        <button mat-icon-button (click)="userConfig.latestupdates = ! userConfig.latestupdates"
+          (click)="updateConfig()">
+          <mat-icon [ngStyle]="userConfig.latestupdates ? {'color':'#428bca'} : {'color':'black'}"
+            class="font-size-toggle">{{userConfig.latestupdates ? 'toggle_on':'toggle_off'}}
+          </mat-icon>
+        </button>
+
+      </div>
     </div>
   </div>
 </div>
