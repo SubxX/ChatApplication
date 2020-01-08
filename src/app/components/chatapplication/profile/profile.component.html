@@ -60,22 +60,14 @@
     <p class="text-center font-weight-light font-size">PROFILE CONFIG</p>
     <div class="row">
       <div class="col-md-8">
-        <p class="text-left mt-1">Show Name on top Left bar</p>
         <p class="text-left mt-1">Show NickName on top Left bar</p>
         <p class="text-left mt-1">Enable Searchbar</p>
         <p class="text-left mt-1">Get latest emails</p>
       </div>
       <div class="col-md-4 text-center">
-        <button mat-icon-button (click)="userConfig.showNameonTop = ! userConfig.showNameonTop"
-          (click)="updateConfig()">
-          <mat-icon [ngStyle]="userConfig.showNameonTop ? {'color':'#428bca'} : {'color':'black'}"
-            class="font-size-toggle">{{userConfig.showNameonTop ? 'toggle_on':'toggle_off'}}
-          </mat-icon>
-        </button><br>
-        <button mat-icon-button (click)="userConfig.showNicknameonTop = ! userConfig.showNicknameonTop"
-          (click)="updateConfig()">
-          <mat-icon [ngStyle]="userConfig.showNicknameonTop ? {'color':'#428bca'} : {'color':'black'}"
-            class="font-size-toggle">{{userConfig.showNicknameonTop ? 'toggle_on':'toggle_off'}}
+        <button mat-icon-button (click)="userConfig.nicknametop = ! userConfig.nicknametop" (click)="updateConfig()">
+          <mat-icon [ngStyle]="userConfig.nicknametop ? {'color':'#428bca'} : {'color':'black'}"
+            class="font-size-toggle">{{userConfig.nicknametop ? 'toggle_on':'toggle_off'}}
           </mat-icon>
         </button><br>
         <button mat-icon-button (click)="userConfig.searchbar = ! userConfig.searchbar" (click)="updateConfig()">

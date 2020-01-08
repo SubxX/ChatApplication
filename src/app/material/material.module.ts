@@ -6,7 +6,7 @@ import {
   MatIconModule,
   MatProgressBarModule,
   MatProgressSpinnerModule,
-  MatMenuModule
+  MatMenuModule,
 } from '@angular/material';
 
 const material = [
@@ -16,7 +16,7 @@ const material = [
   MatIconModule,
   MatProgressBarModule,
   MatProgressSpinnerModule,
-  MatMenuModule
+  MatMenuModule,
 ];
 
 

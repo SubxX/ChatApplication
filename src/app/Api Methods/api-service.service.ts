@@ -54,5 +54,11 @@ export class ApiServiceService {
   updateProfilePicture(body) {
     return this.http.post<any>(this.apiLink + 'login/uploadprofilepic', body);
   }
+  updateProfileConfig(body) {
+    return this.http.post<any>(this.apiLink + 'login/changeProfileConfig', body);
+  }
+  getaProfileConfig(id) {
+    return this.http.get<any>(this.apiLink + 'login/getaProfileConfig/' + id);
+  }
 
 }

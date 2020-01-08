@@ -159,6 +159,7 @@
 	display: none;
 	animation: fadeinout 4s infinite forwards;
 }
+
 @media screen and (max-width: 1200px) {
     .root{
       display: none;

@@ -7,13 +7,14 @@
         <div class="user-details">
           <img *ngIf="profilePic" [src]="profilePic" class="user-logo" [routerLink]="['/chatapplication/myprofile']">
           <img *ngIf="!profilePic" src="../../../assets/user.svg" class="user-logo">
-          <span class="font-weight-light">{{currentUser.name}}</span>
+          <span class="font-weight-light" *ngIf="!userConfig.nicknametop">{{currentUser.name}}</span>
+          <span class="font-weight-light" *ngIf="userConfig.nicknametop">{{currentUser.nickname}}</span>
           <button mat-icon-button [matMenuTriggerFor]="menu" class="settings-logo-btn">
             <img src="../../../assets/settings.svg" class="settings-logo">
           </button>
         </div>
       </div>
-      <div class="search-box">
+      <div class="search-box" *ngIf="userConfig.searchbar">
         <div class="search-bar">
           <input type="text" class="search-bar-input" placeholder="search here" [(ngModel)]="searchData"
             (keyup)="searchUser()">
@@ -22,6 +23,7 @@
       </div>
       <div class="online-users">
         <span *ngIf="filterUser.length===0">
+          <mat-progress-bar mode="indeterminate" class="mt-2" *ngIf="onlineUsers.length==0"></mat-progress-bar>
           <span *ngFor="let user of onlineUsers">
             <div class="user" (click)="userChanged()"
               [routerLink]="['/chatapplication/', this.currentUser._id, user._id]" routerLinkActive="user-active">
@@ -68,43 +70,3 @@
 
 <!--Resolution Error-->
 <h1 class="text-align-center text-danger err text-left">IT IS A DESKTOP SITE </h1>
-
-<!--
-
-
-
-
-    <div class=" left-bar">
-      <div class="user-bar text-center">
-        <span class="ml-1 mr-4  current-user">{{currentUser.name}}</span>
-      </div>
-      <div class="search-bar">
-        <input type="text" placeholder="Search for user" class="text-searchbar pl-5 pr-4">
-        <i class="material-icons search-icon">search</i>
-      </div>
-      <div class="online-user-list">
-        <span *ngFor="let user of onlineUsers">
-          <div class="user p-2" (click)="userChanged()"
-            [routerLink]="['/chatapplication/', this.currentUser._id, user._id]" routerLinkActive="active-chat">
-            <i class="material-icons list-user-logo mr-2">supervised_user_circle</i>
-            <p class="list-user-name">{{user.name}}</p>
-            <div class="green-dot"></div>
-          </div>
-        </span>
-
-        <button mat-icon-button [matMenuTriggerFor]="menu" class="setting-btn">
-          <i class="fa fa-cog" aria-hidden="true"></i>
-        </button>
-        <mat-menu #menu="matMenu">
-          <button mat-menu-item>
-            <mat-icon>supervised_user_circle</mat-icon>
-            <span class="mr-5">Profile</span>
-          </button>
-          <button mat-menu-item (click)="logout()">
-            <mat-icon>power_settings_new</mat-icon>
-            <span class="mr-5">Logout</span>
-          </button>
-        </mat-menu>
-      </div>
-    </div>
--->

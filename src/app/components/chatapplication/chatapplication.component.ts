@@ -10,7 +10,23 @@ import * as io from 'socket.io-client';
 })
 export class ChatapplicationComponent implements OnInit {
   msgdata = '';
-  currentUser = { _id: '', name: '', email: '' };
+  currentUser = {
+    _id: '',
+    name: '',
+    email: '',
+    nickname: '',
+    password: '',
+    profileconfig: {
+      nicknametop: Boolean,
+      searchbar: Boolean,
+      latestupdates: Boolean
+    }
+  };
+  userConfig = {
+    nicknametop: Boolean,
+    searchbar: Boolean,
+    latestupdates: Boolean
+  };
   onlineUsers = [];
   messages = [];
   socket;
@@ -28,6 +44,9 @@ export class ChatapplicationComponent implements OnInit {
     this.socket.on('upProfilePic', (data) => {
       this.initUserProfilePic();
     });
+    this.socket.on('refreshConfig', (data) => {
+      this.updateProfileConfig();
+    });
   }
 
   initLoggedUser() {
@@ -35,12 +54,24 @@ export class ChatapplicationComponent implements OnInit {
       .subscribe(
         (user) => {
           this.currentUser = user;
+          this.userConfig = {
+            nicknametop: this.currentUser.profileconfig.nicknametop,
+            searchbar: this.currentUser.profileconfig.searchbar,
+            latestupdates: this.currentUser.profileconfig.latestupdates
+          };
           this.router.navigate(['/chatapplication/welcome']);
         },
         (err) => {
           console.log('user not loggedin');
           this.router.navigate(['']);
         }
+      );
+  }
+  updateProfileConfig() {
+    this.api.getaProfileConfig(this.currentUser._id)
+      .subscribe(
+        (data) => { this.userConfig = data; },
+        (err) => { console.log(err); }
       );
   }
   initUserProfilePic() {
@@ -74,7 +105,7 @@ export class ChatapplicationComponent implements OnInit {
   searchUser() {
     if (this.searchData !== undefined) {
       this.filterUser = this.onlineUsers.filter((item) => {
-        if (item.name.toLowerCase() !== this.searchData.toLowerCase()) {
+        if (item.name.trim().toLowerCase() !== this.searchData.trim().toLowerCase()) {
           return false;
         }
         return true;
@@ -83,7 +114,5 @@ export class ChatapplicationComponent implements OnInit {
       return false;
     }
   }
-
-
 
 }

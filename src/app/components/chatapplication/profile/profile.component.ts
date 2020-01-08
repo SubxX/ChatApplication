@@ -13,13 +13,22 @@ export class ProfileComponent implements OnInit {
   profilEditForm;
   isVisible = false;
   profilepic;
-  currentUser = { name: '', email: '', nickname: '', password: '' };
+  currentUser = {
+    name: '',
+    email: '',
+    nickname: '',
+    password: '',
+    profileconfig: {
+      nicknametop: Boolean,
+      searchbar: Boolean,
+      latestupdates: Boolean
+    }
+  };
   socket;
   userConfig = {
-    showNameonTop: true,
-    showNicknameonTop: true,
-    searchbar: true,
-    latestupdates: false
+    nicknametop: Boolean,
+    searchbar: Boolean,
+    latestupdates: Boolean
   };
   constructor(private fb: FormBuilder, private api: ApiServiceService, private router: Router) {
     this.socket = io('http://localhost:3000');
@@ -66,6 +75,11 @@ export class ProfileComponent implements OnInit {
         (user) => {
           this.currentUser = user;
           this.populateEditForm();
+          this.userConfig = {
+            nicknametop: this.currentUser.profileconfig.nicknametop,
+            searchbar: this.currentUser.profileconfig.searchbar,
+            latestupdates: this.currentUser.profileconfig.latestupdates
+          };
         },
         (err) => {
           console.log('user not loggedin');
@@ -90,6 +104,14 @@ export class ProfileComponent implements OnInit {
     this.isVisible = !this.isVisible;
   }
   updateConfig() {
-    console.log(this.userConfig);
+    this.api.updateProfileConfig(this.userConfig)
+      .subscribe(
+        (data) => {
+          this.socket.emit('refreshConfig', {});
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
   }
 }
