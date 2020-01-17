@@ -119,10 +119,19 @@
 	margin-left:20px;
 	font-size: 15px;
 }
-.status{
-	width:13px;
-	height:13px;
+.online-status{
+	width:7px;
+	height:7px;
 	background: rgb(26, 219, 26);
+	border-radius: 50%;
+	position: absolute;
+	top:40%;
+	right:15px;
+}
+.offline-status{
+	width:7px;
+	height:7px;
+	background: rgb(219, 71, 26);
 	border-radius: 50%;
 	position: absolute;
 	top:40%;
@@ -132,6 +141,16 @@
   width: 50px;
   height:50px;
   border-radius: 50%;
+}
+.pBarMain{
+  width: 30%;
+  position: absolute;
+  top:50%;
+  left:50%;
+  transform: translate(-50%,-50%);
+}
+.fadeIn{
+  animation: loadFadeOut forwards 1s;
 }
 ::-webkit-scrollbar {
 	width: 12px;
@@ -181,4 +200,12 @@
 	  100%{
 		opacity: 1;
 	  }
+}
+@keyframes loadFadeOut{
+  0%{
+    opacity: 0;
+  }
+  100%{
+    opacity: 1;
+  }
 }

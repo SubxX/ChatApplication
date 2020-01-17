@@ -1,72 +1,81 @@
-<img src="./../../../assets/chat-app-bg.png" class="img-bg">
-<div class="root">
-  <div class="main-window">
+<div *ngIf="load==100" [ngClass]="{'fadeIn': load==100}">
+  <img src="./../../../assets/chat-app-bg.png" class="img-bg">
+  <div class="root">
+    <div class="main-window">
 
-    <div class="left-side">
-      <div class="user-bar p-2">
-        <div class="user-details">
-          <img *ngIf="profilePic" [src]="profilePic" class="user-logo" [routerLink]="['/chatapplication/myprofile']">
-          <img *ngIf="!profilePic" src="../../../assets/user.svg" class="user-logo">
-          <span class="font-weight-light" *ngIf="!userConfig.nicknametop">{{currentUser.name}}</span>
-          <span class="font-weight-light" *ngIf="userConfig.nicknametop">{{currentUser.nickname}}</span>
-          <button mat-icon-button [matMenuTriggerFor]="menu" class="settings-logo-btn">
-            <img src="../../../assets/settings.svg" class="settings-logo">
-          </button>
+      <div class="left-side">
+        <div class="user-bar p-2">
+          <div class="user-details">
+            <img *ngIf="profilePic" [src]="profilePic" class="user-logo" [routerLink]="['/chatapplication/myprofile']">
+            <img *ngIf="!profilePic" src="../../../assets/user.svg" class="user-logo">
+            <span class="font-weight-light" *ngIf="!userConfig.nicknametop">{{currentUser.name}}</span>
+            <span class="font-weight-light" *ngIf="userConfig.nicknametop">{{currentUser.nickname}}</span>
+            <button mat-icon-button [matMenuTriggerFor]="menu" class="settings-logo-btn">
+              <img src="../../../assets/settings.svg" class="settings-logo">
+            </button>
+          </div>
+        </div>
+        <div class="search-box" *ngIf="userConfig.searchbar">
+          <div class="search-bar">
+            <input type="text" class="search-bar-input" placeholder="search here" [(ngModel)]="searchData"
+              (keyup)="searchUser()">
+            <img src="../../../assets/searchicon.svg" class="search-icon">
+          </div>
+        </div>
+        <div class="online-users">
+          <span *ngIf="filterUser.length===0">
+            <mat-progress-bar mode="indeterminate" class="mt-2" *ngIf="onlineUsers.length==0"></mat-progress-bar>
+            <span *ngFor="let user of onlineUsers">
+              <div class="user" (click)="userChanged()"
+                [routerLink]="['/chatapplication/', this.currentUser._id, user._id]" routerLinkActive="user-active">
+                <!--<span matBadge="0" matBadgeOverlap="false"></span>-->
+                <img *ngIf="!user.profilepic" src="../../../assets/online-user-logo.svg">
+                <img *ngIf="user.profilepic" src="data:image/png;base64,{{user.profilepic}}" class="on-user-logo">
+                <span>{{user.name}}</span>
+                <div [ngClass]="{'online-status': user.loginstatus, 'offline-status': !user.loginstatus}"></div>
+              </div>
+            </span>
+          </span>
+
+          <span *ngIf="filterUser.length>0">
+            <span *ngFor="let user of filterUser">
+              <div class="user" (click)="userChanged()"
+                [routerLink]="['/chatapplication/', this.currentUser._id, user._id]" routerLinkActive="user-active">
+                <img *ngIf="!user.profilepic" src="../../../assets/online-user-logo.svg">
+                <img *ngIf="user.profilepic" src="data:image/png;base64,{{user.profilepic}}" class="on-user-logo">
+                <span>{{user.name}}</span>
+                <div class="status"></div>
+              </div>
+            </span>
+          </span>
+
         </div>
       </div>
-      <div class="search-box" *ngIf="userConfig.searchbar">
-        <div class="search-bar">
-          <input type="text" class="search-bar-input" placeholder="search here" [(ngModel)]="searchData"
-            (keyup)="searchUser()">
-          <img src="../../../assets/searchicon.svg" class="search-icon">
-        </div>
+
+      <div class=" right-bar">
+        <router-outlet></router-outlet>
       </div>
-      <div class="online-users">
-        <span *ngIf="filterUser.length===0">
-          <mat-progress-bar mode="indeterminate" class="mt-2" *ngIf="onlineUsers.length==0"></mat-progress-bar>
-          <span *ngFor="let user of onlineUsers">
-            <div class="user" (click)="userChanged()"
-              [routerLink]="['/chatapplication/', this.currentUser._id, user._id]" routerLinkActive="user-active">
-              <img *ngIf="!user.profilepic" src="../../../assets/online-user-logo.svg">
-              <img *ngIf="user.profilepic" src="data:image/png;base64,{{user.profilepic}}" class="on-user-logo">
-              <span>{{user.name}}</span>
-              <div class="status"></div>
-            </div>
-          </span>
-        </span>
-
-        <span *ngIf="filterUser.length>0">
-          <span *ngFor="let user of filterUser">
-            <div class="user" (click)="userChanged()"
-              [routerLink]="['/chatapplication/', this.currentUser._id, user._id]" routerLinkActive="user-active">
-              <img *ngIf="!user.profilepic" src="../../../assets/online-user-logo.svg">
-              <img *ngIf="user.profilepic" src="data:image/png;base64,{{user.profilepic}}" class="on-user-logo">
-              <span>{{user.name}}</span>
-              <div class="status"></div>
-            </div>
-          </span>
-        </span>
-
-      </div>
-    </div>
-
-    <div class=" right-bar">
-      <router-outlet></router-outlet>
     </div>
   </div>
-</div>
 
-<!--Menu for users-->
-<mat-menu #menu="matMenu">
-  <button mat-menu-item [routerLink]="['/chatapplication/myprofile']">
-    <mat-icon>supervised_user_circle</mat-icon>
-    <span class="mr-5">Profile</span>
-  </button>
-  <button mat-menu-item (click)="logout()">
-    <mat-icon>power_settings_new</mat-icon>
-    <span class="mr-5">Logout</span>
-  </button>
-</mat-menu>
+
+  <!--Menu for users-->
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item [routerLink]="['/chatapplication/myprofile']" (click)="updateActiveChat()">
+      <mat-icon>supervised_user_circle</mat-icon>
+      <span class="mr-5">Profile</span>
+    </button>
+    <button mat-menu-item (click)="logout()">
+      <mat-icon>power_settings_new</mat-icon>
+      <span class="mr-5">Logout</span>
+    </button>
+  </mat-menu>
+
+</div>
+<div class="container pBarMain text-center" *ngIf="load!=100">
+  <img src="../../../assets/Logo.png" class="logo-loading">
+  <mat-progress-bar mode="determinate" value={{load}} color="primary"></mat-progress-bar>
+</div>
 
 <!--Resolution Error-->
 <h1 class="text-align-center text-danger err text-left">IT IS A DESKTOP SITE </h1>

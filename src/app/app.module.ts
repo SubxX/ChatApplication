@@ -8,7 +8,6 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material/material.module';
 import { ApiServiceService } from './Api Methods/api-service.service';
-import { ChatapplicationComponent } from './components/chatapplication/chatapplication.component';
 import { AuthGuard } from './authguard/auth.guard';
 import { InterceptorService } from './interceptor/interceptor.service';
 import { NgxAutoScrollModule } from 'ngx-auto-scroll';

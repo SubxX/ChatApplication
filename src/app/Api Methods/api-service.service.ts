@@ -19,6 +19,9 @@ export class ApiServiceService {
   login(obj) {
     return this.http.post<any>(this.apiLink + 'login', obj);
   }
+  logout(id) {
+    return this.http.get<any>(this.apiLink + 'login/logout/' + id);
+  }
   // for checking token available or not
   isTokenAvailable() {
     return !!localStorage.getItem('authtoken');
@@ -39,26 +42,40 @@ export class ApiServiceService {
   getAllOnlineUsers() {
     return this.http.get<any>(this.apiLink + 'login/getOnlineUsers');
   }
+  // to get Message
   getMessages(sender, receiver) {
     return this.http.get<any>(this.apiLink + 'chat/getmessages/' + sender + '/' + receiver);
   }
+  // to Send Message
   sendMessage(obj) {
     return this.http.post<any>(this.apiLink + 'chat', obj);
   }
+  // Delete a Message
+  deleteMessage(id) {
+    return this.http.get<any>(this.apiLink + 'chat/deleteMsg/' + id);
+  }
+  // get a users details from ID
   getUserDetailsbyId(id) {
     return this.http.get<any>(this.apiLink + 'login/getaUserByid/' + id);
   }
+  // get a users profile picture
   getProfilePicture() {
     return this.http.get<any>(this.apiLink + 'login/getprofilepic');
   }
+  // update a users profile picture
   updateProfilePicture(body) {
     return this.http.post<any>(this.apiLink + 'login/uploadprofilepic', body);
   }
+  // to Update a users profile config
   updateProfileConfig(body) {
     return this.http.post<any>(this.apiLink + 'login/changeProfileConfig', body);
   }
+  // Getting a particular users profile config
   getaProfileConfig(id) {
     return this.http.get<any>(this.apiLink + 'login/getaProfileConfig/' + id);
   }
-
+  // For adding Active chat person
+  addOrUpdateActiveChatUser(sender, receiverMail) {
+    return this.http.get<any>(this.apiLink + 'login/addActiveChatUser/' + sender + '/' + receiverMail);
+  }
 }

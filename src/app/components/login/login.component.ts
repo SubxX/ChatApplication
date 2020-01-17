@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ApiServiceService } from './../../Api Methods/api-service.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import * as io from 'socket.io-client';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -11,7 +13,10 @@ export class LoginComponent implements OnInit {
   loginForm;
   showProgressSpinner = false;
   invalidcred = '';
-  constructor(private api: ApiServiceService, private fb: FormBuilder, private router: Router) { }
+  socket;
+  constructor(private api: ApiServiceService, private fb: FormBuilder, private router: Router) {
+    this.socket = io('http://localhost:3000');
+  }
 
   ngOnInit() {
     this.formInit();
@@ -33,6 +38,7 @@ export class LoginComponent implements OnInit {
             this.loginForm.disable();
             localStorage.setItem('authtoken', res.token);
             setTimeout(() => {
+              this.socket.emit('refreshStatus', {});
               this.showProgressSpinner = false;
               this.router.navigate(['/chatapplication/welcome']);
             }, 2000);

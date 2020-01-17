@@ -65,20 +65,19 @@
         <p class="text-left mt-1">Get latest emails</p>
       </div>
       <div class="col-md-4 text-center">
-        <button mat-icon-button (click)="userConfig.nicknametop = ! userConfig.nicknametop" (click)="updateConfig()">
-          <mat-icon [ngStyle]="userConfig.nicknametop ? {'color':'#428bca'} : {'color':'black'}"
-            class="font-size-toggle">{{userConfig.nicknametop ? 'toggle_on':'toggle_off'}}
+        <button mat-icon-button (click)="nicknametop = ! nicknametop" (click)="updateConfig()">
+          <mat-icon [ngStyle]="nicknametop ? {'color':'#428bca'} : {'color':'black'}" class="font-size-toggle">
+            {{nicknametop ? 'toggle_on':'toggle_off'}}
           </mat-icon>
         </button><br>
-        <button mat-icon-button (click)="userConfig.searchbar = ! userConfig.searchbar" (click)="updateConfig()">
-          <mat-icon [ngStyle]="userConfig.searchbar ? {'color':'#428bca'} : {'color':'black'}" class="font-size-toggle">
-            {{userConfig.searchbar ? 'toggle_on':'toggle_off'}}
+        <button mat-icon-button (click)="searchbar = ! searchbar" (click)="updateConfig()">
+          <mat-icon [ngStyle]="searchbar ? {'color':'#428bca'} : {'color':'black'}" class="font-size-toggle">
+            {{searchbar ? 'toggle_on':'toggle_off'}}
           </mat-icon>
         </button><br>
-        <button mat-icon-button (click)="userConfig.latestupdates = ! userConfig.latestupdates"
-          (click)="updateConfig()">
-          <mat-icon [ngStyle]="userConfig.latestupdates ? {'color':'#428bca'} : {'color':'black'}"
-            class="font-size-toggle">{{userConfig.latestupdates ? 'toggle_on':'toggle_off'}}
+        <button mat-icon-button (click)="latestupdates = ! latestupdates" (click)="updateConfig()">
+          <mat-icon [ngStyle]="latestupdates ? {'color':'#428bca'} : {'color':'black'}" class="font-size-toggle">
+            {{latestupdates ? 'toggle_on':'toggle_off'}}
           </mat-icon>
         </button>
 

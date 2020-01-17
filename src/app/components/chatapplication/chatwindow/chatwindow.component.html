@@ -1,36 +1,87 @@
 <div class="current-msg-person flex-center">
   <div class="text-center flex-center">
-    <!--<img *ngif="!receiverUser.profilepic" src="../../../../assets/online-user-logo.svg">-->
     <img *ngIf="!receiverUser.profilepic" src="../../../../assets/online-user-logo.svg">
     <img *ngIf="receiverUser.profilepic" src="data:image/png;base64,{{receiverUser.profilepic}}"
       class="active-chat-logo">
     <span class="active-chat-name">{{receiverUser.name}}</span>
-    <span class="active-chat"></span>
+    <span [ngClass]="{'online-status': receiverUser.loginstatus,'offline-status': !receiverUser.loginstatus}"></span>
   </div>
 </div>
 <div class="msg-thread" ngx-auto-scroll lock-y-offset="10" observe-attributes>
-  <div *ngIf="messages.length==0" class="center">
+  <div *ngIf="showNoMessageErr" class="center">
     <span class="text-white title-text">No Messages! send a Message now ?</span>
+  </div>
+  <div class="loadAn" *ngIf="pSpinner">
+    <mat-progress-spinner mode="indeterminate" color="accent" diameter="40" class="spinner"></mat-progress-spinner>
   </div>
   <span *ngFor="let msg of messages">
 
-    <div class="sender mt-2 mb-2" *ngIf="msg.sender!=currentUser.name">
-      <p>{{msg.msgBody}}</p>
-      <small class="time">{{msg.date.substr(11,5)}}</small>
-      <i class="material-icons unseen-icon">done</i>
+    <div class="receiver mt-2 mb-2" *ngIf="msg.sender==receiverUser.name">
+      <div class="receiver-options">
+        <button class="nbtn"><i class="material-icons msg-options-icons" matTooltip="reply"
+            (click)="replyMsg(msg)">reply</i></button>
+      </div>
+      <div>
+
+        <div class="receiver-inner" *ngIf="msg.reference!= null && msg.reference.sender==currentUser.name">
+          <p class="ml-2">{{msg.reference.msgBody}}</p>
+          <small class="time-receiver-specific">{{msg.reference.date | date:"shortTime"}}</small>
+        </div>
+        <div class="receiver-inner bg-light text-dark border"
+          *ngIf="msg.reference!= null && msg.reference.sender==receiverUser.name">
+          <p class=" ml-2">{{msg.reference.msgBody}}</p>
+          <small class="time-receiver-specific">{{msg.reference.date | date:"shortTime"}}</small>
+        </div>
+
+        <p>{{msg.msgBody}}</p>
+        <small class="time-sender">{{msg.date | date:"shortTime"}}</small>
+      </div>
     </div>
 
-    <div class="receiver mt-2 mb-2" *ngIf="msg.sender==currentUser.name">
-      <p>{{msg.msgBody}}</p>
-      <small class="time">{{msg.date.substr(11,5)}}</small>
-      <i class="material-icons seen-icon">done_all</i>
+    <div class="sender mt-2 mb-2" *ngIf="msg.sender==currentUser.name">
+      <div>
+
+        <div class="sender-inner" *ngIf="msg.reference != null && msg.reference.sender==receiverUser.name">
+          <p class="ml-2">{{msg.reference.msgBody}}</p>
+          <small class="time-receiver-specific">{{msg.reference.date | date:"shortTime"}}</small>
+        </div>
+        <div class="sender-inner bg-light text-dark border"
+          *ngIf="msg.reference != null && msg.reference.sender==currentUser.name">
+          <p class="ml-2">{{msg.reference.msgBody}}</p>
+          <small class="time-receiver-specific">{{msg.reference.date | date:"shortTime"}}</small>
+        </div>
+
+        <p>{{msg.msgBody}}</p>
+        <small class="time-receiver">{{msg.date | date:"shortTime"}}</small>
+        <i class="material-icons" [ngClass]="{'seen-icon': msg.isSeen,'unseen-icon':!msg.isSeen}">
+          {{msg.isSeen ? 'done_all' : 'done'}}
+        </i>
+      </div>
+      <div class="sender-options">
+        <button class="nbtn"><i class="material-icons msg-options-icons" matTooltip="reply"
+            (click)="replyMsg(msg)">reply</i></button>
+        <button class="nbtn"><i class="material-icons msg-options-icons" matTooltip="delete"
+            (click)="deleteMsg(msg)">delete</i></button>
+      </div>
     </div>
+
 
   </span>
 </div>
 <div class="input-box-message">
-  <input type="text" name="msg" class="msg-input" placeholder="enter message" autocomplete="off" [(ngModel)]="msgData"
-    (keyup)="enterKey($event)">
+
+  <div class="replytoSpecific" *ngIf="rpMSGWindow">
+    <div class="inner">
+      <p class="ml-2">{{rpBody}}</p>
+      <button class="close" (click)="closerpMsg()">
+        <mat-icon>close</mat-icon>
+      </button>
+      <small class="time-receiver">{{rpDate | date:"HH:mm"}}</small>
+    </div>
+  </div>
+
+  <input type="text" [ngClass]="{'msg-input-reply-in': rpMSGWindow,'msg-input-reply-out': !rpMSGWindow}" name="msg"
+    class="msg-input" placeholder="enter message" autocomplete="off" [(ngModel)]="msgData" (keyup)="enterKey($event)">
   <button mat-icon-button class="send-button" (click)="sendMessage()" [disabled]="!msgData">
     <i class="material-icons send-icon">send</i>
   </button>

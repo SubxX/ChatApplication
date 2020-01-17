@@ -3,6 +3,7 @@ import { ApiServiceService } from '../../../Api Methods/api-service.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import * as io from 'socket.io-client';
 
+
 @Component({
   selector: 'app-chatwindow',
   templateUrl: './chatwindow.component.html',
@@ -12,25 +13,26 @@ export class ChatwindowComponent implements OnInit {
   receiverId;
   senderId;
   currentUser = { _id: '', name: '' };
-  receiverUser = { _id: '', name: '', profilepic: '' };
+  receiverUser = { _id: '', name: '', profilepic: '', loginstatus: Boolean, email: String };
   messages = [];
   socket;
   msgData;
-
+  showNoMessageErr = false;
+  pSpinner = false;
+  rpMSGWindow = false;
+  rpBody;
+  rpDate;
+  rpId;
   constructor(private api: ApiServiceService, private router: Router, private activetedroute: ActivatedRoute) {
     this.socket = io('http://localhost:3000');
   }
 
   ngOnInit() {
-    this.receiverId = this.activetedroute.snapshot.params.receiver;
-    this.senderId = this.activetedroute.snapshot.params.sender;
-    this.getMessages();
     this.initLoggedUser();
-    this.getTheReceiverDetails();
-
-    this.socket.on('refreshPage', (data) => {
-      this.receiverId = this.activetedroute.snapshot.params.receiver;
-      this.senderId = this.activetedroute.snapshot.params.sender;
+    this.activetedroute.params.subscribe((params) => {
+      this.receiverId = params.receiver;
+      this.senderId = params.sender;
+      this.closerpMsg();
       this.getMessages();
       this.getTheReceiverDetails();
     });
@@ -39,6 +41,15 @@ export class ChatwindowComponent implements OnInit {
     });
   }
 
+
+  // update active chat user
+  addOrUpdateActiveChat(senderId, receiverEmail) {
+    this.api.addOrUpdateActiveChatUser(senderId, receiverEmail)
+      .subscribe(
+        (data) => { console.log(data); },
+        (err) => { console.log(err); }
+      );
+  }
   // init loggedin user
   initLoggedUser() {
     this.api.getUserFromToken()
@@ -54,10 +65,21 @@ export class ChatwindowComponent implements OnInit {
   }
   // fetch messages on given user
   getMessages() {
+    this.showNoMessageErr = false;
+    this.pSpinner = true;
     this.api.getMessages(this.senderId, this.receiverId)
       .subscribe(
         (data) => {
-          this.messages = data;
+          if (data.length > 0) {
+            this.messages = data;
+            this.pSpinner = false;
+          } else {
+            this.messages = [];
+            setTimeout(() => {
+              this.pSpinner = false;
+              this.showNoMessageErr = true;
+            }, 1000);
+          }
         },
         (err) => {
           console.log('something went wrong in getting messages');
@@ -70,6 +92,7 @@ export class ChatwindowComponent implements OnInit {
       .subscribe(
         (data) => {
           this.receiverUser = data;
+          this.addOrUpdateActiveChat(this.currentUser._id, this.receiverUser.email);
         },
         (err) => {
           console.log('something went wrong when getting the receiver user data');
@@ -78,18 +101,13 @@ export class ChatwindowComponent implements OnInit {
   }
 
   // Send message
-  sendMessage() {
+  async sendMessage() {
     if (this.msgData) {
-      const smsBody = {
-        sendername: this.currentUser.name,
-        senderId: this.currentUser._id,
-        receivername: this.receiverUser.name,
-        receiverId: this.receiverUser._id,
-        msg: this.msgData
-      };
+      const smsBody = await this.generatemsgBody();
       this.api.sendMessage(smsBody)
         .subscribe(
           (data) => {
+            this.closerpMsg();
             this.socket.emit('msgrefresh', {});
           },
           (err) => {
@@ -102,7 +120,6 @@ export class ChatwindowComponent implements OnInit {
       console.log('cannot post empty data');
     }
   }
-
   // Send message using Enter
   enterKey(e) {
     if (e.which === 13) {
@@ -114,6 +131,54 @@ export class ChatwindowComponent implements OnInit {
   // attach files
   attachFiles(e) {
     console.log(e.target.files[0]);
+  }
+  // Message options
+  replyMsg(msg) {
+    this.rpBody = msg.msgBody;
+    this.rpDate = msg.date;
+    this.rpId = msg._id;
+    this.rpMSGWindow = true;
+  }
+  closerpMsg() {
+    this.rpBody = '';
+    this.rpDate = '';
+    this.rpId = '';
+    this.rpMSGWindow = false;
+  }
+  pinMsg(msg) {
+    console.log(msg);
+  }
+  deleteMsg(msg) {
+    this.api.deleteMessage(msg._id)
+      .subscribe(
+        (data) => { this.getMessages(); },
+        (err) => {
+          console.log(err);
+        }
+      );
+  }
+
+  async generatemsgBody() {
+    let smsBody;
+    if (this.rpId) {
+      smsBody = await {
+        sendername: this.currentUser.name,
+        senderId: this.currentUser._id,
+        receivername: this.receiverUser.name,
+        receiverId: this.receiverUser._id,
+        msg: this.msgData,
+        reference: this.rpId
+      };
+    } else {
+      smsBody = await {
+        sendername: this.currentUser.name,
+        senderId: this.currentUser._id,
+        receivername: this.receiverUser.name,
+        receiverId: this.receiverUser._id,
+        msg: this.msgData
+      };
+    }
+    return smsBody;
   }
 
 }

@@ -7,7 +7,6 @@
 	font-size: 49px;
 }
 .input-box-message{
-	position: relative;
 	padding: 10px 15px;
 	background: rgba(51, 51, 51, 0.281);
 	border:none;
@@ -45,7 +44,17 @@
 	overflow-y: auto;
 }
 .sender{
-	position: relative;
+  position: relative;
+	height: auto;
+	max-width: 40%;
+	color:#333;
+	background :#fff;
+	border-radius: 20px;
+	padding: 6px 15px;
+	margin-left:10px;
+}
+.receiver{
+  position: relative;
 	height: auto;
 	max-width: 40%;
 	color:#fff;
@@ -55,20 +64,58 @@
 	margin-left: auto;
 	margin-right: 10px;
 }
-.receiver{
-	position: relative;
-	height: auto;
-	max-width: 40%;
-	color:#333;
-	background :#fff;
-	border-radius: 20px;
-	padding: 6px 15px;
-	margin-left:10px;
+.sender:hover .msg-options-icons{
+  opacity: 1;
 }
-.time{
-	position: absolute;
+.receiver:hover .msg-options-icons{
+  opacity: 1;
+}
+.sender-options{
+  position: absolute;
+  right:-50px;
+  top:18px;
+}
+.msg-options-icons{
+  font-size: 20px;
+  color:#fff !important;
+  cursor: pointer;
+  opacity: 0;
+  transition: 0.4s;
+}
+.msg-options-icons:hover{
+  transform: translateY(-5px);
+  color:#fff !important;
+}
+.nbtn{
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  outline: none;
+  margin-left:2px;
+}
+.receiver-options{
+  position: absolute;
+  left:-30px;
+  top:15px;
+}
+
+.outline-none{
+  outline: none;
+}
+.mat-menu-content {
+  background-color: 'red' !important;
+}
+
+.time-sender{
+  position: absolute;
 	bottom: 5px;
-	right:40px;
+	right:20px;
+}
+.time-receiver{
+  position: absolute;
+	bottom: 5px;
+  right:40px;
 }
 .unseen-icon{
 	position: absolute;
@@ -92,10 +139,22 @@
 	margin-left:10px;
 	font-size: 18px;
 }
-.active-chat{
-	width:13px;
-	height:13px;
+.progress-spinner{
+  position: relative;
+  left:50%;
+  top:5%;
+}
+.online-status{
+	width:7px;
+	height:7px;
 	background: rgb(26, 219, 26);
+	border-radius: 50%;
+	margin-left:10px;
+}
+.offline-status{
+	width:7px;
+	height:7px;
+	background: rgb(219, 71, 26);
 	border-radius: 50%;
 	margin-left:10px;
 }
@@ -130,8 +189,58 @@
   height: 50px;
   border-radius: 50%;
 }
+.loadAn{
+  width: 100%;
+  animation: loadAnimation 1s forwards !important;
+}
+.spinner{
+  margin:auto !important;
+}
 
-
+.inner{
+  position: relative;
+  margin:10px 5px;
+  border-left: 5px solid #333;
+}
+.close{
+  position: absolute;
+  right: 5px;
+  top:0;
+  outline: none;
+  border:none;
+  background: none;
+  outline: none;
+}
+.sender-inner{
+  position: relative;
+  height: auto;
+  background:#333;
+  color:White;
+  border-radius: 15px;
+  padding: 2px 0;
+}
+.receiver-inner{
+  position: relative;
+  height: auto;
+  background:#fff;
+  color:#333;
+  border-radius: 15px;
+  padding: 2px 0;
+}
+.time-receiver-specific{
+  position: absolute;
+  bottom: 2px;
+  right: 10px;
+}
+.replytoSpecific{
+  position: absolute;
+  margin-top: 0px;
+  width:50%;
+  height:50px;
+  background: #fff;
+  border-radius: 10px 10px 0 0;
+  animation:fadeFromBtm 1s forwards !important;
+}
 ::-webkit-scrollbar {
 	width: 12px;
 }
@@ -157,4 +266,54 @@
   100%{
     opacity: 0%;
   }
+}
+
+@keyframes loadAnimation{
+  0%{
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  100%{
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes fadeFromBtm{
+  0%{
+    opacity: 0;
+    margin-top: 0px;
+  }
+  100%{
+    opacity: 1;
+    margin-top: -43px;
+  }
+}
+@keyframes inputIn{
+  0%{
+    border-radius:20px 20px 20px 20px;
+  }
+  50%{
+    border-radius:10px 20px 20px 20px;
+  }
+  100%{
+    border-radius:0 20px 20px 20px;
+  }
+}
+@keyframes inputOut{
+  0%{
+    border-radius:0 20px 20px 20px;
+  }
+  50%{
+    border-radius:10px 20px 20px 20px;
+  }
+  100%{
+    border-radius:20px 20px 20px 20px;
+  }
+}
+
+.msg-input-reply-in{
+  animation: inputIn forwards 0.3s;
+}
+.msg-input-reply-out{
+  animation: inputOut forwards 0.1ms;
 }

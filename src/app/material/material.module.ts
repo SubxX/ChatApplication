@@ -7,6 +7,8 @@ import {
   MatProgressBarModule,
   MatProgressSpinnerModule,
   MatMenuModule,
+  MatBadgeModule,
+  MatTooltipModule
 } from '@angular/material';
 
 const material = [
@@ -17,6 +19,8 @@ const material = [
   MatProgressBarModule,
   MatProgressSpinnerModule,
   MatMenuModule,
+  MatBadgeModule,
+  MatTooltipModule
 ];
 
 
