@@ -75,6 +75,7 @@
 <div class="container pBarMain text-center" *ngIf="load!=100">
   <img src="../../../assets/Logo.png" class="logo-loading">
   <mat-progress-bar mode="determinate" value={{load}} color="primary"></mat-progress-bar>
+  <small>{{loadText}}</small>
 </div>
 
 <!--Resolution Error-->

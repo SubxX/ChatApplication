@@ -7,66 +7,74 @@
     <span [ngClass]="{'online-status': receiverUser.loginstatus,'offline-status': !receiverUser.loginstatus}"></span>
   </div>
 </div>
-<div class="msg-thread" ngx-auto-scroll lock-y-offset="10" observe-attributes>
-  <div *ngIf="showNoMessageErr" class="center">
-    <span class="text-white title-text">No Messages! send a Message now ?</span>
+
+<div style="height: 83%; overflow-y: auto;" ngx-auto-scroll lock-y-offset="10" observe-attributes>
+
+  <div class="load-center text-center" *ngIf="!init">
+    <img src="../../../../assets/Logo.png" class="logo-cn">
+    <small class="load-text">Initilizing . . .</small>
+    <mat-progress-bar mode="determinate" value={{Loadvalue}} color="primary"></mat-progress-bar>
   </div>
-  <div class="loadAn" *ngIf="pSpinner">
-    <mat-progress-spinner mode="indeterminate" color="accent" diameter="40" class="spinner"></mat-progress-spinner>
+
+  <div class="msg-thread" *ngIf="init">
+    <img src="../../../../assets/illustration.png" class="bg-thread" [ngClass]="{'fadeInDiv': init}">
+    <div class="loadAn" *ngIf="pSpinner">
+      <mat-progress-spinner mode="indeterminate" color="accent" diameter="40" class="spinner"></mat-progress-spinner>
+    </div>
+    <span *ngFor="let msg of messages">
+
+      <div class="receiver mt-2 mb-2" *ngIf="msg.sender==receiverUser.name">
+        <div class="receiver-options">
+          <button class="nbtn"><i class="material-icons msg-options-icons" matTooltip="reply"
+              (click)="replyMsg(msg)">reply</i></button>
+        </div>
+        <div>
+
+          <div class="receiver-inner" *ngIf="msg.reference!= null && msg.reference.sender==currentUser.name">
+            <p class="ml-2">{{msg.reference.msgBody}}</p>
+            <small class="time-receiver-specific">{{msg.reference.date | date:"shortTime"}}</small>
+          </div>
+          <div class="receiver-inner bg-light text-dark border"
+            *ngIf="msg.reference!= null && msg.reference.sender==receiverUser.name">
+            <p class=" ml-2">{{msg.reference.msgBody}}</p>
+            <small class="time-receiver-specific">{{msg.reference.date | date:"shortTime"}}</small>
+          </div>
+
+          <p>{{msg.msgBody}}</p>
+          <small class="time-sender">{{msg.date | date:"shortTime"}}</small>
+        </div>
+      </div>
+
+      <div class="sender mt-2 mb-2" *ngIf="msg.sender==currentUser.name">
+        <div>
+
+          <div class="sender-inner" *ngIf="msg.reference != null && msg.reference.sender==receiverUser.name">
+            <p class="ml-2">{{msg.reference.msgBody}}</p>
+            <small class="time-receiver-specific">{{msg.reference.date | date:"shortTime"}}</small>
+          </div>
+          <div class="sender-inner bg-light text-dark border"
+            *ngIf="msg.reference != null && msg.reference.sender==currentUser.name">
+            <p class="ml-2">{{msg.reference.msgBody}}</p>
+            <small class="time-receiver-specific">{{msg.reference.date | date:"shortTime"}}</small>
+          </div>
+
+          <p>{{msg.msgBody}}</p>
+          <small class="time-receiver">{{msg.date | date:"shortTime"}}</small>
+          <i class="material-icons" [ngClass]="{'seen-icon': msg.isSeen,'unseen-icon':!msg.isSeen}">
+            {{msg.isSeen ? 'done_all' : 'done'}}
+          </i>
+        </div>
+        <div class="sender-options">
+          <button class="nbtn"><i class="material-icons msg-options-icons" matTooltip="reply"
+              (click)="replyMsg(msg)">reply</i></button>
+          <button class="nbtn"><i class="material-icons msg-options-icons" matTooltip="delete"
+              (click)="deleteMsg(msg)">delete</i></button>
+        </div>
+      </div>
+
+
+    </span>
   </div>
-  <span *ngFor="let msg of messages">
-
-    <div class="receiver mt-2 mb-2" *ngIf="msg.sender==receiverUser.name">
-      <div class="receiver-options">
-        <button class="nbtn"><i class="material-icons msg-options-icons" matTooltip="reply"
-            (click)="replyMsg(msg)">reply</i></button>
-      </div>
-      <div>
-
-        <div class="receiver-inner" *ngIf="msg.reference!= null && msg.reference.sender==currentUser.name">
-          <p class="ml-2">{{msg.reference.msgBody}}</p>
-          <small class="time-receiver-specific">{{msg.reference.date | date:"shortTime"}}</small>
-        </div>
-        <div class="receiver-inner bg-light text-dark border"
-          *ngIf="msg.reference!= null && msg.reference.sender==receiverUser.name">
-          <p class=" ml-2">{{msg.reference.msgBody}}</p>
-          <small class="time-receiver-specific">{{msg.reference.date | date:"shortTime"}}</small>
-        </div>
-
-        <p>{{msg.msgBody}}</p>
-        <small class="time-sender">{{msg.date | date:"shortTime"}}</small>
-      </div>
-    </div>
-
-    <div class="sender mt-2 mb-2" *ngIf="msg.sender==currentUser.name">
-      <div>
-
-        <div class="sender-inner" *ngIf="msg.reference != null && msg.reference.sender==receiverUser.name">
-          <p class="ml-2">{{msg.reference.msgBody}}</p>
-          <small class="time-receiver-specific">{{msg.reference.date | date:"shortTime"}}</small>
-        </div>
-        <div class="sender-inner bg-light text-dark border"
-          *ngIf="msg.reference != null && msg.reference.sender==currentUser.name">
-          <p class="ml-2">{{msg.reference.msgBody}}</p>
-          <small class="time-receiver-specific">{{msg.reference.date | date:"shortTime"}}</small>
-        </div>
-
-        <p>{{msg.msgBody}}</p>
-        <small class="time-receiver">{{msg.date | date:"shortTime"}}</small>
-        <i class="material-icons" [ngClass]="{'seen-icon': msg.isSeen,'unseen-icon':!msg.isSeen}">
-          {{msg.isSeen ? 'done_all' : 'done'}}
-        </i>
-      </div>
-      <div class="sender-options">
-        <button class="nbtn"><i class="material-icons msg-options-icons" matTooltip="reply"
-            (click)="replyMsg(msg)">reply</i></button>
-        <button class="nbtn"><i class="material-icons msg-options-icons" matTooltip="delete"
-            (click)="deleteMsg(msg)">delete</i></button>
-      </div>
-    </div>
-
-
-  </span>
 </div>
 <div class="input-box-message">
 
@@ -85,8 +93,4 @@
   <button mat-icon-button class="send-button" (click)="sendMessage()" [disabled]="!msgData">
     <i class="material-icons send-icon">send</i>
   </button>
-  <button mat-icon-button class="attachment-btn">
-    <i class="material-icons attach-file-icon" (click)="file.click()">attach_file</i>
-  </button>
-  <input type="file" hidden #file (change)="attachFiles($event)">
 </div>

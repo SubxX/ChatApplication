@@ -36,6 +36,7 @@ export class ChatapplicationComponent implements OnInit {
   profilePic;
   status = 'ONLINE';
   isConnected = true;
+  loadText;
   constructor(private api: ApiServiceService, private router: Router) {
     this.socket = io('http://localhost:3000');
   }
@@ -58,9 +59,9 @@ export class ChatapplicationComponent implements OnInit {
 
   initLoggedUserPromise() {
     this.initLoggedUser().then(() => {
-      this.load = this.load + 30;
+      this.load = this.load + 50;
       this.getOnlineUsers().then(() => {
-        this.load = this.load + 50;
+        this.load = this.load + 30;
         this.initUserProfilePic().then(() => {
           this.load = this.load + 20;
         });
@@ -89,7 +90,8 @@ export class ChatapplicationComponent implements OnInit {
               latestupdates: this.currentUser.profileconfig.latestupdates
             };
             this.router.navigate(['/chatapplication/welcome']);
-            resolve('loaded');
+            this.loadText = 'Initilizing Logged in User...';
+            this.globalSetTimeOut(2000, resolve);
           },
           (err) => {
             console.log('user not loggedin');
@@ -112,11 +114,13 @@ export class ChatapplicationComponent implements OnInit {
         .subscribe(
           (data) => {
             this.profilePic = 'data:image/png;base64,' + data;
-            resolve('loaded profile');
+            this.loadText = 'Loaded profile Picture...';
+            this.globalSetTimeOut(2000, resolve);
           },
           (err) => {
             this.profilePic = '';
-            reject();
+            this.loadText = 'No Profile Picture Found Loding Default...';
+            this.globalSetTimeOut(2000, resolve);
           }
         );
     });
@@ -128,7 +132,8 @@ export class ChatapplicationComponent implements OnInit {
         .subscribe(
           (data) => {
             this.onlineUsers = data;
-            resolve('loaded online users');
+            this.loadText = 'initilizing other users....';
+            this.globalSetTimeOut(2000, resolve);
           },
           (err) => {
             console.log('something went wrong');
@@ -165,4 +170,11 @@ export class ChatapplicationComponent implements OnInit {
       return false;
     }
   }
+
+  globalSetTimeOut(time, resolve) {
+    setTimeout(() => {
+      resolve();
+    }, time);
+  }
+
 }

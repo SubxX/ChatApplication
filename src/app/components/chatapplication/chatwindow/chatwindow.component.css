@@ -19,7 +19,7 @@
   width:100% !important;
 }
 .msg-input{
-	width:95%;
+	width:100%;
 	border:none;
 	border-radius: 20px;
 	height:38px;
@@ -36,12 +36,16 @@
   transform: rotate(30deg);
 }
 .msg-thread{
+  position: relative;
 	width: 100%;
-	height: 83%;
-	background:url("../../../../assets/illustration.png");
-	background-size: cover;
-	background-repeat: no-repeat;
-	overflow-y: auto;
+}
+.bg-thread{
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 72%;
+  height: 92%;
+  z-index: -1;
 }
 .sender{
   position: relative;
@@ -172,22 +176,24 @@
 	cursor: pointer;
 	color:rgb(116, 114, 114);
 }
-.center{
-  position: absolute;
-  top:50%;
-  left:50%;
-  transform: translate(-50%,-50%);
-  animation: opNoMsg forwards 5s infinite;
+.fadeInDiv{
+  animation: fadeInMainDiv forwards 0.5s;
 }
-.title-text{
-  font-weight: 100;
-  font-size: 23px;
-  letter-spacing: 0.1rem;
-}
+
 .active-chat-logo{
   width: 50px;
   height: 50px;
   border-radius: 50%;
+}
+.load-center{
+  width: 50%;
+  position: absolute;
+  top:50%;
+  left:50%;
+  transform: translate(-50%,-50%);
+}
+.load-text{
+  letter-spacing: 0.2rem;
 }
 .loadAn{
   width: 100%;
@@ -241,6 +247,7 @@
   border-radius: 10px 10px 0 0;
   animation:fadeFromBtm 1s forwards !important;
 }
+
 ::-webkit-scrollbar {
 	width: 12px;
 }
@@ -256,18 +263,14 @@
 	background: rgb(90, 90, 90);
 }
 
-@keyframes opNoMsg{
+@keyframes fadeInMainDiv{
   0%{
-    opacity: 0%;
-  }
-  50%{
-    opacity: 100%;
+    opacity:0;
   }
   100%{
-    opacity: 0%;
+    opacity:1;
   }
 }
-
 @keyframes loadAnimation{
   0%{
     opacity: 0;

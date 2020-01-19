@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ApiServiceService } from '../../Api Methods/api-service.service';
+import { ApiServiceService } from '../../../Api Methods/api-service.service';
 
 @Component({
   selector: 'app-register',
@@ -32,6 +32,7 @@ export class RegisterComponent implements OnInit {
       this.api.registerUser(this.registerForm.value)
         .subscribe(
           (res) => {
+            sessionStorage.setItem('email', this.registerForm.value.email);
             this.showProgressspinner = false;
             this.isRegSuccess = true;
           },

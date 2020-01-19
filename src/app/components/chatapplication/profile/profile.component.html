@@ -15,7 +15,7 @@
     </button>
   </div>
 
-  <div class="row mt-4 margin-btm">
+  <div class="row mt-1 margin-btm">
     <div class="col-md-6">
       <p class="text-center font-weight-light font-size">EDIT PROFILE</p>
       <form [formGroup]="profilEditForm">
@@ -29,8 +29,11 @@
           <input matInput type="text" placeholder="Email" formControlName="email">
         </mat-form-field>
         <mat-form-field class="width-100">
+          <input matInput type="password" placeholder="Old Password" formControlName="password">
+        </mat-form-field>
+        <mat-form-field class="width-100">
           <input matInput [type]="isVisible ? 'text' : 'password'" placeholder="New Password"
-            formControlName="password">
+            formControlName="newpassword">
           <button mat-icon-button matSuffix (click)="toogleVisibility()">
             <mat-icon>{{isVisible? 'visibility': 'visibility_off'}}</mat-icon>
           </button>

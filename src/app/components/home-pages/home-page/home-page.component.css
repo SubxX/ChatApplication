@@ -48,7 +48,7 @@ img{
 }
 .about-div{
 	width:100%;
-	background: url('../../../assets/bg-svg.svg') no-repeat;
+	background: url('../../../../assets/bg-svg.svg') no-repeat;
 	background-size: cover;
 }
 .abt{
@@ -93,7 +93,7 @@ img{
 	border-radius: 10px;
 }
 .team-down-bg{
-	background: url('../../../assets/team-down-bg.svg') no-repeat;
+	background: url('../../../../assets/team-down-bg.svg') no-repeat;
 	position: absolute;
 	bottom: 0;
 	width: 100%;

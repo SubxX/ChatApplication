@@ -1,6 +1,6 @@
 <div class="main">
   <div class="flex-center">
-    <div class="em-sent">
+    <div class="em-sent fadeInVerWindow">
 
       <img class="tick" src="../../../../assets/done-tick-img.png">
 
@@ -17,15 +17,18 @@
           <span class="email">{{email}} </span>
           <br>Enter the 6 Digit code from your email to verify your email address in order to get login access
         </p>
-        <div class="container mb-4">
-          <mat-form-field>
+        <div class="container mb-4 width-35">
+          <mat-form-field class="width-100">
             <mat-label>CODE</mat-label>
             <input matInput name="code" autocomplete="off" [(ngModel)]="codeValue" (keyup)="enterKey($event)">
             <button matSuffix mat-icon-button color="primary" *ngIf="codeValue.length==6" (click)="confirmEmail()">
               <mat-icon>subdirectory_arrow_left</mat-icon>
             </button>
             <mat-hint align="end" style="color:red;">{{err}}</mat-hint>
-          </mat-form-field>
+          </mat-form-field><br>
+          <small *ngIf="count!=0">00:{{count.length==1 ?'0'+count : count}}</small>
+          <button class="btn-block" mat-flat-button color="primary" (click)="resendCodetoEmail()"
+            [disabled]="disablBTN">Resend</button>
         </div>
         <img class="news mr-3" src="../../../../assets/News.png">
         <span class="text-muted pcym">IMPORTANT PLEASE CHECK YOUR EMAIL</span><br>

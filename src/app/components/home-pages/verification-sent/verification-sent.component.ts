@@ -8,22 +8,39 @@ import { Router } from '@angular/router';
   styleUrls: ['./verification-sent.component.css']
 })
 export class VerificationSentComponent implements OnInit {
-  @Input() email;
+  email;
   codeValue = '';
   isSuccess = false;
   err = '';
+  disablBTN = true;
+  count: number;
   constructor(private api: ApiServiceService, private route: Router) { }
 
   ngOnInit() {
+    this.email = sessionStorage.getItem('email');
+    this.counter();
   }
 
+  counter() {
+    this.count = 60;
+    const interval = setInterval(() => {
+      this.count = this.count - 1;
+      if (this.count === 0) {
+        this.disablBTN = false;
+        clearInterval(interval);
+        return;
+      }
+    }, 1000);
+  }
   confirmEmail() {
     const objBody = { email: this.email, emailValid: this.codeValue.toUpperCase() };
     this.api.confirmEmail(objBody).subscribe(
       (res) => {
         this.isSuccess = true;
+        sessionStorage.clear();
         setTimeout(() => {
-          this.route.navigate(['/login']);
+          this.route.navigateByUrl('/', { skipLocationChange: true }).then(() =>
+            this.route.navigate(['/login']));
         }, 3000);
       },
       (err) => {
@@ -41,6 +58,17 @@ export class VerificationSentComponent implements OnInit {
     } else {
       return false;
     }
+  }
+  resendCodetoEmail() {
+    this.api.resendVerificationCode(this.email)
+      .subscribe(
+        (data) => {
+          this.disablBTN = true;
+          this.counter();
+        },
+        (err) => {
+          console.log(err);
+        });
   }
 
 }

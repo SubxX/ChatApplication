@@ -17,18 +17,25 @@ export class ChatwindowComponent implements OnInit {
   messages = [];
   socket;
   msgData;
-  showNoMessageErr = false;
   pSpinner = false;
   rpMSGWindow = false;
   rpBody;
   rpDate;
   rpId;
+  init = false;
+  Loadvalue = 0;
   constructor(private api: ApiServiceService, private router: Router, private activetedroute: ActivatedRoute) {
     this.socket = io('http://localhost:3000');
   }
 
   ngOnInit() {
-    this.initLoggedUser();
+    this.initLoggedUser()
+      .then((data) => {
+        this.Loadvalue = 100; setTimeout(() => {
+          this.init = true;
+        }, 1000);
+      })
+      .catch((err) => { this.router.navigate(['']); });
     this.activetedroute.params.subscribe((params) => {
       this.receiverId = params.receiver;
       this.senderId = params.sender;
@@ -52,32 +59,32 @@ export class ChatwindowComponent implements OnInit {
   }
   // init loggedin user
   initLoggedUser() {
-    this.api.getUserFromToken()
-      .subscribe(
-        (user) => {
-          this.currentUser = user;
-        },
-        (err) => {
-          console.log('user not loggedin');
-          this.router.navigate(['']);
-        }
-      );
+    return new Promise((resolve, reject) => {
+      this.api.getUserFromToken()
+        .subscribe(
+          (user) => {
+            this.currentUser = user;
+            resolve();
+          },
+          (err) => {
+            console.log('user not loggedin');
+            reject();
+          }
+        );
+    });
   }
   // fetch messages on given user
   getMessages() {
-    this.showNoMessageErr = false;
-    this.pSpinner = true;
     this.api.getMessages(this.senderId, this.receiverId)
       .subscribe(
         (data) => {
           if (data.length > 0) {
             this.messages = data;
-            this.pSpinner = false;
           } else {
             this.messages = [];
+            this.pSpinner = true;
             setTimeout(() => {
               this.pSpinner = false;
-              this.showNoMessageErr = true;
             }, 1000);
           }
         },
@@ -127,10 +134,6 @@ export class ChatwindowComponent implements OnInit {
     } else {
       return false;
     }
-  }
-  // attach files
-  attachFiles(e) {
-    console.log(e.target.files[0]);
   }
   // Message options
   replyMsg(msg) {

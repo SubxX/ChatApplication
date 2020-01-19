@@ -45,7 +45,8 @@ export class ProfileComponent implements OnInit {
       name: [''],
       email: [''],
       nickname: [''],
-      password: ['']
+      password: [''],
+      newpassword: [''],
     });
   }
 
@@ -66,7 +67,9 @@ export class ProfileComponent implements OnInit {
       );
   }
   saveChanges() {
+    this.profilEditForm.controls.email.enable();
     console.log(this.profilEditForm.value);
+    this.profilEditForm.controls.email.disable();
   }
 
   initLoggedUser() {

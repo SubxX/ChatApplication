@@ -1,26 +1,24 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { LoginComponent } from './components/login/login.component';
-import { RegisterComponent } from './components/register/register.component';
-import { NotfoundpageComponent } from './components/notfoundpage/notfoundpage.component';
-import { VerificationSentComponent } from './components/register/verification-sent/verification-sent.component';
-import { HomePageComponent } from './components/home-page/home-page.component';
+import { NotfoundpageComponent } from './components/home-pages/notfoundpage/notfoundpage.component';
 import { ChatapplicationComponent } from './components/chatapplication/chatapplication.component';
 import { ChatwindowComponent } from './components/chatapplication/chatwindow/chatwindow.component';
 import { InitViewComponent } from './components/chatapplication/init-view/init-view.component';
 import { ProfileComponent } from './components/chatapplication/profile/profile.component';
 import { AuthGuard } from './authguard/auth.guard';
+import { LoginComponent } from './components/home-pages/login/login.component';
+import { RegisterComponent } from './components/home-pages/register/register.component';
 
 const routes: Routes = [
-  { path: '', component: HomePageComponent },
+  { path: '', loadChildren: () => import('./components/home-pages/home-page/home-page.module').then(m => m.HomePageModule) },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   {
     path: 'chatapplication', component: ChatapplicationComponent, canActivate: [AuthGuard],
     children: [
-      { path: 'welcome', component: InitViewComponent },
-      { path: ':sender/:receiver', component: ChatwindowComponent },
-      { path: 'myprofile', component: ProfileComponent }
+      { path: 'welcome', component: InitViewComponent, canActivate: [AuthGuard] },
+      { path: ':sender/:receiver', component: ChatwindowComponent, canActivate: [AuthGuard] },
+      { path: 'myprofile', component: ProfileComponent, canActivate: [AuthGuard] }
     ]
   },
   { path: '**', component: NotfoundpageComponent }
@@ -32,13 +30,12 @@ const routes: Routes = [
 })
 export class AppRoutingModule { }
 export const Allroutes = [
-  LoginComponent,
-  RegisterComponent,
   NotfoundpageComponent,
-  VerificationSentComponent,
-  HomePageComponent,
   ChatapplicationComponent,
   ChatwindowComponent,
   InitViewComponent,
-  ProfileComponent
+  ProfileComponent,
+  LoginComponent,
+  RegisterComponent,
+  NotfoundpageComponent
 ];

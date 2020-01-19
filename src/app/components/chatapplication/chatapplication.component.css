@@ -189,6 +189,9 @@
     .img-bg{
       display: none;
     }
+    .pBarMain{
+      display: none;
+    }
 }
 @keyframes fadeinout{
 	  0%{

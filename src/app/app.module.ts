@@ -11,13 +11,17 @@ import { ApiServiceService } from './Api Methods/api-service.service';
 import { AuthGuard } from './authguard/auth.guard';
 import { InterceptorService } from './interceptor/interceptor.service';
 import { NgxAutoScrollModule } from 'ngx-auto-scroll';
+import { VerificationSentComponent } from './components/home-pages/verification-sent/verification-sent.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
     AppComponent,
-    Allroutes
+    Allroutes,
+    VerificationSentComponent
   ],
   imports: [
+    RouterModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule,
