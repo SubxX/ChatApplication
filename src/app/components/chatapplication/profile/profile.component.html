@@ -2,6 +2,9 @@
   <div class="title text-center mb-2 mt-1">
     <img src="../../../../assets/Logo.png" class="logo">
     <span class="text-secondary title-text">PROFILE</span>
+    <button class="back-btn-frpr" mat-icon-button [routerLink]="['/chatapplication/welcome']">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
   </div>
 </div>
 <div class="container-fluid over-flow">
@@ -59,32 +62,32 @@
   </div>
 
   <hr>
-  <div class="container-fluid mt-4 mb-3">
-    <p class="text-center font-weight-light font-size">PROFILE CONFIG</p>
-    <div class="row">
-      <div class="col-md-8">
-        <p class="text-left mt-1">Show NickName on top Left bar</p>
-        <p class="text-left mt-1">Enable Searchbar</p>
-        <p class="text-left mt-1">Get latest emails</p>
-      </div>
-      <div class="col-md-4 text-center">
-        <button mat-icon-button (click)="nicknametop = ! nicknametop" (click)="updateConfig()">
-          <mat-icon [ngStyle]="nicknametop ? {'color':'#428bca'} : {'color':'black'}" class="font-size-toggle">
-            {{nicknametop ? 'toggle_on':'toggle_off'}}
-          </mat-icon>
-        </button><br>
-        <button mat-icon-button (click)="searchbar = ! searchbar" (click)="updateConfig()">
-          <mat-icon [ngStyle]="searchbar ? {'color':'#428bca'} : {'color':'black'}" class="font-size-toggle">
-            {{searchbar ? 'toggle_on':'toggle_off'}}
-          </mat-icon>
-        </button><br>
-        <button mat-icon-button (click)="latestupdates = ! latestupdates" (click)="updateConfig()">
-          <mat-icon [ngStyle]="latestupdates ? {'color':'#428bca'} : {'color':'black'}" class="font-size-toggle">
-            {{latestupdates ? 'toggle_on':'toggle_off'}}
-          </mat-icon>
-        </button>
 
-      </div>
-    </div>
+  <div class="container-fluid mt-4 mb-3">
+    <p class="text-center font-weight-light font-size">PROFILE CONFIG & SECURITY</p>
+
+    <mat-card class="mb-2 bg-light d-flex justify-content-between align-items-center">
+      <p class="text-left">Turn on Email Security</p>
+      <mat-slide-toggle color="primary"></mat-slide-toggle>
+    </mat-card>
+
+    <mat-card class="mb-2 bg-light d-flex justify-content-between align-items-center">
+      <p class="text-left">Show NickName on top Left bar</p>
+      <mat-slide-toggle color="primary" checked="nicknametop" (click)="nicknametop = !nicknametop"
+        (click)="updateConfig()"></mat-slide-toggle>
+    </mat-card>
+
+    <mat-card class="mb-2 bg-light d-flex justify-content-between align-items-center">
+      <p class="text-left">Enable Searchbar</p>
+      <mat-slide-toggle color="primary" checked="searchbar" (click)="searchbar = ! searchbar" (click)="updateConfig()">
+      </mat-slide-toggle>
+    </mat-card>
+
+    <mat-card class="mb-2 bg-light d-flex justify-content-between align-items-center">
+      <p class="text-left">Get latest emails</p>
+      <mat-slide-toggle color="primary" checked="latestupdates" (click)="latestupdates = ! latestupdates"
+        (click)="updateConfig()"></mat-slide-toggle>
+    </mat-card>
+
   </div>
 </div>

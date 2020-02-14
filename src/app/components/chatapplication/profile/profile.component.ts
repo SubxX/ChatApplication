@@ -68,8 +68,18 @@ export class ProfileComponent implements OnInit {
   }
   saveChanges() {
     this.profilEditForm.controls.email.enable();
-    console.log(this.profilEditForm.value);
-    this.profilEditForm.controls.email.disable();
+    this.api.updateUser(this.profilEditForm.value)
+      .subscribe(
+        (data) => {
+          this.profilEditForm.controls.email.disable();
+          console.log(data);
+          setTimeout(() => {
+            this.api.removeToken();
+            this.router.navigate(['']);
+          }, 2000);
+        },
+        (err) => { console.log(err); this.profilEditForm.controls.email.disable(); }
+      );
   }
 
   initLoggedUser() {

@@ -161,10 +161,11 @@ export class ChatapplicationComponent implements OnInit {
   searchUser() {
     if (this.searchData !== undefined) {
       this.filterUser = this.onlineUsers.filter((item) => {
-        if (item.name.trim().toLowerCase() !== this.searchData.trim().toLowerCase()) {
-          return false;
+        const reg = new RegExp(this.searchData, 'ig');
+        if (item.name.match(reg)) {
+          return true;
         }
-        return true;
+        return false;
       });
     } else {
       return false;

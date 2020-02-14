@@ -80,7 +80,7 @@
 
   <div class="replytoSpecific" *ngIf="rpMSGWindow">
     <div class="inner">
-      <p class="ml-2">{{rpBody}}</p>
+      <p class="ml-2">{{rpBody.slice(0,22)}} ...</p>
       <button class="close" (click)="closerpMsg()">
         <mat-icon>close</mat-icon>
       </button>

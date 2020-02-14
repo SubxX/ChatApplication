@@ -64,11 +64,18 @@ button{
   display: flex;
   align-items: center;
 }
-.font-size-toggle{
-  font-size: 40px !important;
-}
 .margin-btm{
   margin-bottom: 64px;
+}
+.back-btn-frpr{
+  position: absolute;
+  left:10px;
+  top:15px;
+  z-index: 3;
+}
+mat-card  p{
+  margin:0 !important;
+  padding: 0 !important;
 }
 
 

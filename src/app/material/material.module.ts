@@ -8,7 +8,9 @@ import {
   MatProgressSpinnerModule,
   MatMenuModule,
   MatBadgeModule,
-  MatTooltipModule
+  MatTooltipModule,
+  MatSlideToggleModule,
+  MatCardModule
 } from '@angular/material';
 
 const material = [
@@ -20,7 +22,9 @@ const material = [
   MatProgressSpinnerModule,
   MatMenuModule,
   MatBadgeModule,
-  MatTooltipModule
+  MatTooltipModule,
+  MatSlideToggleModule,
+  MatCardModule
 ];
 
 

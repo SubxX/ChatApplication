@@ -3,40 +3,53 @@
   </div>
   <div class="container flex-center">
     <div class="login-window">
-      <div class="text-center logo-div">
-        <img src="../../../assets/Logo.png">
-      </div>
-      <div class="alert alert-primary alert-dismissible fade show" role="alert" *ngIf="invalidcred">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <button (click)="closeInvalidCred()" mat-icon-button>
-            <mat-icon>close</mat-icon>
+      <div style="transition: 0.3s ease-out;" [ngClass]="{'opacity-low': emailVerifiactionOn}">
+        <div class="text-center logo-div">
+          <img src="../../../assets/Logo.png">
+        </div>
+        <div class="alert alert-primary alert-dismissible fade show" role="alert" *ngIf="invalidcred">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <button (click)="closeInvalidCred()" mat-icon-button>
+              <mat-icon>close</mat-icon>
+            </button>
           </button>
-        </button>
-        <strong>Invalid</strong> Credentials Plese try again !
-      </div>
-      <form [formGroup]="loginForm" (keyup)="enterKeytoLogin($event)">
-        <mat-form-field appearance="outline" class="width-100">
-          <mat-icon matSuffix>person</mat-icon>
-          <mat-label>Enter Username</mat-label>
-          <input matInput type="email" formControlName="email">
-          <mat-error *ngIf="loginForm.controls.email.status=='INVALID'">Please Enter a valid email</mat-error>
-        </mat-form-field>
+          <strong>Invalid</strong> Credentials Plese try again !
+        </div>
+        <form [formGroup]="loginForm" (keyup)="enterKeytoLogin($event)">
+          <mat-form-field appearance="outline" class="width-100">
+            <mat-icon matSuffix>person</mat-icon>
+            <mat-label>Enter Username</mat-label>
+            <input matInput type="email" formControlName="email">
+            <mat-error *ngIf="loginForm.controls.email.status=='INVALID'">Please Enter a valid email</mat-error>
+          </mat-form-field>
 
-        <mat-form-field appearance="outline" class="width-100">
-          <mat-icon matSuffix>security</mat-icon>
-          <mat-label>Enter Password</mat-label>
-          <input matInput type="password" formControlName="password">
-          <mat-error *ngIf="loginForm.controls.password.status=='INVALID'">Password is required</mat-error>
-        </mat-form-field>
-      </form>
-      <button mat-raised-button class="width-100 login-button" (click)="userLogin()"
-        [disabled]="loginForm.status=='INVALID'">SIGNIN</button>
-      <div class="text-center mt-5 mb-2">
-        <p class="text-muted">Forgot Password? <a>Reset</a></p>
-        <a class="create-new-account-link" [routerLink]="['/register']">create a new account</a>
+          <mat-form-field appearance="outline" class="width-100">
+            <mat-icon matSuffix>security</mat-icon>
+            <mat-label>Enter Password</mat-label>
+            <input matInput type="password" formControlName="password">
+            <mat-error *ngIf="loginForm.controls.password.status=='INVALID'">Password is required</mat-error>
+          </mat-form-field>
+        </form>
+        <button mat-raised-button class="width-100 login-button" (click)="userLogin()"
+          [disabled]="loginForm.status=='INVALID' || signBtnpress">SIGNIN</button>
+        <div class="text-center mt-5 mb-2">
+          <p class="text-muted">Forgot Password? <a>Reset</a></p>
+          <a class="create-new-account-link" [routerLink]="['/register']">create a new account</a>
+        </div>
       </div>
       <mat-progress-spinner *ngIf="showProgressSpinner" mode="indeterminate" class="login-progress-spinner">
       </mat-progress-spinner>
+
+      <div class="email-verification-on d-flex justify-content-center align-items-center flex-column"
+        [ngClass]="{'showWindow': emailVerifiactionOn}">
+        <p>Enter the Code from your email</p>
+        <mat-form-field class="width-50" appearance="outline">
+          <mat-label>Enter Code</mat-label>
+          <input type="text" matInput>
+          <mat-icon matSuffix>subdirectory_arrow_left</mat-icon>
+        </mat-form-field>
+      </div>
+
     </div>
   </div>
 </div>

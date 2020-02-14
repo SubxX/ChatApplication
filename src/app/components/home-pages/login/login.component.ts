@@ -14,7 +14,9 @@ export class LoginComponent implements OnInit {
   showProgressSpinner = false;
   invalidcred: boolean;
   socket;
+  signBtnpress = false;
   verificationWindow = false;
+  emailVerifiactionOn = false;
   constructor(private api: ApiServiceService, private fb: FormBuilder, private router: Router) {
     this.socket = io('http://localhost:3000');
   }
@@ -34,6 +36,7 @@ export class LoginComponent implements OnInit {
   userLogin() {
     if (this.loginForm.status !== 'INVALID') {
       this.closeInvalidCred();
+      this.signBtnpress = true;
       this.api.login(this.loginForm.value)
         .subscribe(
           (res) => {
@@ -47,6 +50,7 @@ export class LoginComponent implements OnInit {
             }, 2000);
           },
           (err) => {
+            this.signBtnpress = false;
             if (err.error.loginerr === 'INVALID CREDENTIALS') {
               this.invalidcred = true;
               this.loginForm.controls.password.setValue('');

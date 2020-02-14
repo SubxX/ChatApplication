@@ -24,7 +24,7 @@
         </div>
         <div class="online-users">
           <span *ngIf="filterUser.length===0">
-            <mat-progress-bar mode="indeterminate" class="mt-2" *ngIf="onlineUsers.length==0"></mat-progress-bar>
+            <p class="text-center pt-3 pb-3 alert-warning" *ngIf="onlineUsers.length==0">No Online users Found</p>
             <span *ngFor="let user of onlineUsers">
               <div class="user" (click)="userChanged()"
                 [routerLink]="['/chatapplication/', this.currentUser._id, user._id]" routerLinkActive="user-active">
@@ -44,7 +44,7 @@
                 <img *ngIf="!user.profilepic" src="../../../assets/online-user-logo.svg">
                 <img *ngIf="user.profilepic" src="data:image/png;base64,{{user.profilepic}}" class="on-user-logo">
                 <span>{{user.name}}</span>
-                <div class="status"></div>
+                <div [ngClass]="{'online-status': user.loginstatus, 'offline-status': !user.loginstatus}"></div>
               </div>
             </span>
           </span>

@@ -53,7 +53,7 @@ export class ChatwindowComponent implements OnInit {
   addOrUpdateActiveChat(senderId, receiverEmail) {
     this.api.addOrUpdateActiveChatUser(senderId, receiverEmail)
       .subscribe(
-        (data) => { console.log(data); },
+        (data) => { return; },
         (err) => { console.log(err); }
       );
   }

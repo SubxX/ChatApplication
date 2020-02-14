@@ -78,7 +78,12 @@ export class ApiServiceService {
   addOrUpdateActiveChatUser(sender, receiverMail) {
     return this.http.get<any>(this.apiLink + 'login/addActiveChatUser/' + sender + '/' + receiverMail);
   }
+  // Resend Verification Email
   resendVerificationCode(email) {
     return this.http.get<any>(this.apiLink + 'register/resend/' + email);
+  }
+  // update a user details
+  updateUser(body) {
+    return this.http.post<any>(this.apiLink + 'register/update/user', body);
   }
 }

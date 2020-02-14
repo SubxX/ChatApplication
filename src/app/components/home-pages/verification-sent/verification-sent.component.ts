@@ -11,9 +11,9 @@ export class VerificationSentComponent implements OnInit {
   email;
   codeValue = '';
   isSuccess = false;
-  err = '';
+  err: string;
   disablBTN = true;
-  count: number;
+  count: any;
   constructor(private api: ApiServiceService, private route: Router) { }
 
   ngOnInit() {
@@ -45,7 +45,6 @@ export class VerificationSentComponent implements OnInit {
       },
       (err) => {
         this.err = 'INVALID';
-        console.log('failed');
         setTimeout(() => {
           this.err = '';
         }, 4000);

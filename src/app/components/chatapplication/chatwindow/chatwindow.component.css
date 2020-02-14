@@ -68,6 +68,9 @@
 	margin-left: auto;
 	margin-right: 10px;
 }
+p{
+  word-wrap: break-word;
+}
 .sender:hover .msg-options-icons{
   opacity: 1;
 }
