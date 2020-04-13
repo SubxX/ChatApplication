@@ -1,71 +1,54 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { ApiServiceService } from '../../../Api Methods/api-service.service';
 import { Router } from '@angular/router';
-import * as io from 'socket.io-client';
+import { User, Profileconfig } from '../../../models/interfaces';
+import { ProfileconfigService } from '../../../Observables/profileconfigobservable/profileconfig.service';
+import { CurrentuserService } from '../../../Observables/currentUserObservable/currentuser.service';
+import { Observable } from 'rxjs';
+import { map, delay } from 'rxjs/operators';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
 })
-export class ProfileComponent implements OnInit {
-  profilEditForm;
+export class ProfileComponent implements OnInit, AfterViewInit {
+  profilEditForm: FormGroup;
+  profilepic: Observable<string>;
+  currentUser: Observable<User>;
+  cfgData: Observable<Profileconfig>;
   isVisible = false;
-  profilepic;
-  currentUser = {
-    name: '',
-    email: '',
-    nickname: '',
-    password: '',
-    profileconfig: {
-      nicknametop: Boolean,
-      searchbar: Boolean,
-      latestupdates: Boolean
-    }
-  };
-  socket;
-
   nicknametop;
   searchbar;
   latestupdates;
-
-  constructor(private fb: FormBuilder, private api: ApiServiceService, private router: Router) {
-    this.socket = io('http://localhost:3000');
+  headerBlr = false;
+  constructor(
+    private fb: FormBuilder, private api: ApiServiceService,
+    private router: Router, private cnfg: ProfileconfigService,
+    private cu: CurrentuserService) {
   }
 
   ngOnInit() {
-    this.initLoggedUser();
+    this.cfgData = this.cnfg.config.pipe(map((data) => {
+      this.nicknametop = data.nicknametop;
+      this.searchbar = data.searchbar;
+      this.latestupdates = this.latestupdates;
+      return data;
+    }));
+    this.profilepic = this.cu.profilepicOBS.pipe(
+      map((data: string) => data)
+    );
+    this.currentUser = this.cu.liUser.pipe(map((data) => {
+      setTimeout(() => { this.populateEditForm(data.name, data.nickname, data.email); }, 0);
+      return data;
+    }));
     this.profileEditFormInit();
-    this.initUserProfilePic();
+  }
+  ngAfterViewInit() {
+
   }
 
-  profileEditFormInit() {
-    this.profilEditForm = this.fb.group({
-      name: [''],
-      email: [''],
-      nickname: [''],
-      password: [''],
-      newpassword: [''],
-    });
-  }
-
-  async changeProfilepic(e) {
-    const formData = new FormData();
-    const file = e.target.files[0];
-    await formData.append('profilepic', file);
-    this.api.updateProfilePicture(formData)
-      .subscribe(
-        (data) => {
-          this.profilepic = 'data:image/png;base64,' + data;
-          console.log('done');
-          this.socket.emit('refreshProfilePic', {});
-        },
-        (err) => {
-          console.log(err);
-        }
-      );
-  }
   saveChanges() {
     this.profilEditForm.controls.email.enable();
     this.api.updateUser(this.profilEditForm.value)
@@ -82,52 +65,35 @@ export class ProfileComponent implements OnInit {
       );
   }
 
-  initLoggedUser() {
-    this.api.getUserFromToken()
-      .subscribe(
-        (user) => {
-          this.currentUser = user;
-          this.populateEditForm();
-          this.nicknametop = this.currentUser.profileconfig.nicknametop;
-          this.searchbar = this.currentUser.profileconfig.searchbar;
-          this.latestupdates = this.currentUser.profileconfig.latestupdates;
-        },
-        (err) => {
-          console.log('user not loggedin');
-          this.router.navigate(['']);
-        }
-      );
+  async changeProfilepic(e) {
+    const file = e.target.files[0];
+    console.log(file);
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      this.cu.updateUserProfilepic({ file: reader.result });
+    };
+
   }
-  initUserProfilePic() {
-    this.api.getProfilePicture()
-      .subscribe(
-        (data) => { this.profilepic = 'data:image/png;base64,' + data; },
-        (err) => { this.profilepic = ''; }
-      );
+  profileEditFormInit() {
+    this.profilEditForm = this.fb.group({
+      name: [''],
+      email: [''],
+      nickname: [''],
+      password: [''],
+      newpassword: [''],
+    });
   }
-  populateEditForm() {
-    this.profilEditForm.controls.name.setValue(this.currentUser.name);
-    this.profilEditForm.controls.nickname.setValue(this.currentUser.nickname);
-    this.profilEditForm.controls.email.setValue(this.currentUser.email);
+  populateEditForm(name, nickname, email) {
+    this.profilEditForm.controls.name.setValue(name);
+    this.profilEditForm.controls.nickname.setValue(nickname);
+    this.profilEditForm.controls.email.setValue(email);
     this.profilEditForm.controls.email.disable();
   }
-  toogleVisibility() {
-    this.isVisible = !this.isVisible;
-  }
   updateConfig() {
-    const userConfig = {
-      nicknametop: this.nicknametop,
-      searchbar: this.searchbar,
-      latestupdates: this.latestupdates
-    };
-    this.api.updateProfileConfig(userConfig)
-      .subscribe(
-        (data) => {
-          this.socket.emit('refreshConfig', {});
-        },
-        (err) => {
-          console.log(err);
-        }
-      );
+    this.cnfg.updateProfileConfig({ nicknametop: this.nicknametop, searchbar: this.searchbar, latestupdates: this.latestupdates });
+  }
+  scrollevBxShadow(e) {
+    e.target.scrollTop > 10 ? this.headerBlr = true : this.headerBlr = false;
   }
 }

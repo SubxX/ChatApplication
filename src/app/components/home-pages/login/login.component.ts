@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiServiceService } from '../../../Api Methods/api-service.service';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import * as io from 'socket.io-client';
 
@@ -10,18 +10,23 @@ import * as io from 'socket.io-client';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  loginForm;
-  showProgressSpinner = false;
+  loginForm: FormGroup;
+  showProgressSpinner: boolean;
   invalidcred: boolean;
-  socket;
-  signBtnpress = false;
-  verificationWindow = false;
-  emailVerifiactionOn = false;
+  socket: any;
+  signBtnpress: boolean;
+  verificationWindow: boolean;
+  emailVerifiactionOn: boolean;
+
   constructor(private api: ApiServiceService, private fb: FormBuilder, private router: Router) {
-    this.socket = io('http://localhost:3000');
+    this.socket = io('https://sleepy-coast-01684.herokuapp.com/');
   }
 
   ngOnInit() {
+    this.showProgressSpinner = false;
+    this.signBtnpress = false;
+    this.verificationWindow = false;
+    this.emailVerifiactionOn = false;
     sessionStorage.clear();
     this.formInit();
   }

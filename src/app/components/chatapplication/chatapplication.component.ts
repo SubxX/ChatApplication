@@ -2,7 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ApiServiceService } from '../../Api Methods/api-service.service';
 import { Router } from '@angular/router';
 import * as io from 'socket.io-client';
-
+import { User, Profileconfig } from '../../models/interfaces';
+import { ProfileconfigService } from '../../Observables/profileconfigobservable/profileconfig.service';
+import { CurrentuserService } from '../../Observables/currentUserObservable/currentuser.service';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 @Component({
   selector: 'app-chatapplication',
   templateUrl: './chatapplication.component.html',
@@ -11,23 +15,6 @@ import * as io from 'socket.io-client';
 export class ChatapplicationComponent implements OnInit {
   load = 0;
   msgdata = '';
-  currentUser = {
-    _id: '',
-    name: '',
-    email: '',
-    nickname: '',
-    password: '',
-    profileconfig: {
-      nicknametop: Boolean,
-      searchbar: Boolean,
-      latestupdates: Boolean
-    }
-  };
-  userConfig = {
-    nicknametop: Boolean,
-    searchbar: Boolean,
-    latestupdates: Boolean
-  };
   onlineUsers = [];
   messages = [];
   socket;
@@ -37,19 +24,22 @@ export class ChatapplicationComponent implements OnInit {
   status = 'ONLINE';
   isConnected = true;
   loadText;
-  constructor(private api: ApiServiceService, private router: Router) {
-    this.socket = io('http://localhost:3000');
+  cfgData: Observable<Profileconfig>;
+  ActiveUser: Observable<User>;
+  profilepic: Observable<string>;
+  userId: string;
+  constructor(private api: ApiServiceService, private router: Router, private cnfg: ProfileconfigService, private cu: CurrentuserService) {
+    this.socket = io('https://sleepy-coast-01684.herokuapp.com/');
+    this.cfgData = this.cnfg.config.pipe(map(data => data));
+    this.ActiveUser = this.cu.liUser.pipe(map((data) => { this.userId = data._id; return data; }));
+    this.profilepic = this.cu.profilepicOBS.pipe(map(data => data));
   }
 
   ngOnInit() {
+    this.router.navigate(['/chatapplication/welcome']);
     this.initLoggedUserPromise();
-
-    this.socket.on('upProfilePic', (data) => {
-      this.initUserProfilePic();
-    });
-    this.socket.on('refreshConfig', (data) => {
-      this.updateProfileConfig();
-    });
+    this.cu.getUser();
+    this.cu.getUserProfilepic();
     this.socket.on('refreshStatus', (data) => {
       if (localStorage.getItem('authtoken')) {
         this.getOnlineUsers();
@@ -58,73 +48,24 @@ export class ChatapplicationComponent implements OnInit {
   }
 
   initLoggedUserPromise() {
-    this.initLoggedUser().then(() => {
+    this.cnfg.getProfileConfig().then(() => {
       this.load = this.load + 50;
       this.getOnlineUsers().then(() => {
-        this.load = this.load + 30;
-        this.initUserProfilePic().then(() => {
-          this.load = this.load + 20;
-        });
+        this.load = this.load + 50;
       });
     });
   }
 
 
   updateActiveChat() {
-    this.api.addOrUpdateActiveChatUser(this.currentUser._id, 'null')
+    this.api.addOrUpdateActiveChatUser(this.userId, 'null')
       .subscribe(
         (data) => { },
         (err) => { console.log(err); }
       );
+    this.slideLeftBar('remove');
   }
 
-  initLoggedUser() {
-    return new Promise((resolve, reject) => {
-      this.api.getUserFromToken()
-        .subscribe(
-          (user) => {
-            this.currentUser = user;
-            this.userConfig = {
-              nicknametop: this.currentUser.profileconfig.nicknametop,
-              searchbar: this.currentUser.profileconfig.searchbar,
-              latestupdates: this.currentUser.profileconfig.latestupdates
-            };
-            this.router.navigate(['/chatapplication/welcome']);
-            this.loadText = 'Initilizing Logged in User...';
-            this.globalSetTimeOut(2000, resolve);
-          },
-          (err) => {
-            console.log('user not loggedin');
-            this.router.navigate(['']);
-            reject();
-          }
-        );
-    });
-  }
-  updateProfileConfig() {
-    this.api.getaProfileConfig(this.currentUser._id)
-      .subscribe(
-        (data) => { this.userConfig = data; },
-        (err) => { console.log(err); }
-      );
-  }
-  initUserProfilePic() {
-    return new Promise((resolve, reject) => {
-      this.api.getProfilePicture()
-        .subscribe(
-          (data) => {
-            this.profilePic = 'data:image/png;base64,' + data;
-            this.loadText = 'Loaded profile Picture...';
-            this.globalSetTimeOut(2000, resolve);
-          },
-          (err) => {
-            this.profilePic = '';
-            this.loadText = 'No Profile Picture Found Loding Default...';
-            this.globalSetTimeOut(2000, resolve);
-          }
-        );
-    });
-  }
 
   getOnlineUsers() {
     return new Promise((resolve, reject) => {
@@ -145,10 +86,11 @@ export class ChatapplicationComponent implements OnInit {
   userChanged() {
     this.filterUser = [];
     this.searchData = '';
+    this.slideLeftBar('remove');
   }
   logout() {
     this.updateActiveChat();
-    this.api.logout(this.currentUser._id)
+    this.api.logout(this.userId)
       .subscribe(
         (data) => {
           this.socket.emit('refreshStatus', {});
@@ -177,5 +119,8 @@ export class ChatapplicationComponent implements OnInit {
       resolve();
     }, time);
   }
-
+  slideLeftBar(act) {
+    act === 'toggle' ? document.querySelector('.left-side').classList.toggle('slide') :
+      document.querySelector('.left-side').classList.remove('slide');
+  }
 }

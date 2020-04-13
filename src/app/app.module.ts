@@ -13,7 +13,8 @@ import { InterceptorService } from './interceptor/interceptor.service';
 import { NgxAutoScrollModule } from 'ngx-auto-scroll';
 import { VerificationSentComponent } from './components/home-pages/verification-sent/verification-sent.component';
 import { RouterModule } from '@angular/router';
-
+import { ProfileconfigService } from './Observables/profileconfigobservable/profileconfig.service';
+import { CurrentuserService } from './Observables/currentUserObservable/currentuser.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,7 +32,7 @@ import { RouterModule } from '@angular/router';
     HttpClientModule,
     NgxAutoScrollModule
   ],
-  providers: [ApiServiceService, AuthGuard, {
+  providers: [ApiServiceService, ProfileconfigService, CurrentuserService, AuthGuard, {
     provide: HTTP_INTERCEPTORS,
     useClass: InterceptorService,
     multi: true

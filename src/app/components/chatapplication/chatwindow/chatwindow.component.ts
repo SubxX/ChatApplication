@@ -25,7 +25,7 @@ export class ChatwindowComponent implements OnInit {
   init = false;
   Loadvalue = 0;
   constructor(private api: ApiServiceService, private router: Router, private activetedroute: ActivatedRoute) {
-    this.socket = io('http://localhost:3000');
+    this.socket = io('https://sleepy-coast-01684.herokuapp.com/');
   }
 
   ngOnInit() {

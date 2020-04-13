@@ -1,9 +1,10 @@
 <div class="main-root">
   <div class="container-fluid header-section"></div>
-  <div class="container flex-center">
+
+  <div class="container wh-100 d-flex justify-content-center align-items-center bd-holder">
     <div class="register-window">
       <div class="text-center logo-div">
-        <img src="../../../assets/Logo.png">
+        <img src="assets/Logo.png">
       </div>
 
       <div [formGroup]="registerForm" (keyup)="regesterOnEnterKey($event)">
@@ -53,5 +54,6 @@
       </mat-progress-spinner>
     </div>
   </div>
+
 </div>
 <app-verification-sent *ngIf="isRegSuccess"></app-verification-sent>

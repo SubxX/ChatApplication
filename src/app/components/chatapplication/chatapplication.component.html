@@ -1,60 +1,76 @@
 <div *ngIf="load==100" [ngClass]="{'fadeIn': load==100}">
-  <img src="./../../../assets/chat-app-bg.png" class="img-bg">
-  <div class="root">
+  <img src="assets/chat-app-bg.png" class="img-bg">
+  <div class="root d-flex align-items-center justify-content-center">
     <div class="main-window">
+      <div class="bar-holder d-flex align-items-center justify-content-center">
+        <i class="fa fa-bars" (click)="slideLeftBar('toggle')"></i>
+      </div>
 
-      <div class="left-side">
-        <div class="user-bar p-2">
-          <div class="user-details">
-            <img *ngIf="profilePic" [src]="profilePic" class="user-logo" [routerLink]="['/chatapplication/myprofile']">
-            <img *ngIf="!profilePic" src="../../../assets/user.svg" class="user-logo">
-            <span class="font-weight-light" *ngIf="!userConfig.nicknametop">{{currentUser.name}}</span>
-            <span class="font-weight-light" *ngIf="userConfig.nicknametop">{{currentUser.nickname}}</span>
-            <button mat-icon-button [matMenuTriggerFor]="menu" class="settings-logo-btn">
-              <img src="../../../assets/settings.svg" class="settings-logo">
-            </button>
+      <div class="left-side" #left>
+        <div class="inner-left">
+
+          <div class="user-bar p-2">
+            <div class="user-details">
+              <img *ngIf="(ActiveUser|async).profilepic" [src]="profilepic |async" class="user-logo"
+                [routerLink]="['/chatapplication/myprofile']" (click)="slideLeftBar('remove')">
+              <img *ngIf="!(ActiveUser|async).profilepic" src="assets/user.svg" class="user-logo"
+                [routerLink]="['/chatapplication/myprofile']" (click)="slideLeftBar('remove')">
+              <span class="font-weight-light" *ngIf="!(cfgData|async).nicknametop">{{(ActiveUser|async).name}}</span>
+              <span class="font-weight-light" *ngIf="(cfgData|async).nicknametop">{{(ActiveUser|async).nickname}}</span>
+            </div>
           </div>
-        </div>
-        <div class="search-box" *ngIf="userConfig.searchbar">
-          <div class="search-bar">
-            <input type="text" class="search-bar-input" placeholder="search here" [(ngModel)]="searchData"
-              (keyup)="searchUser()">
-            <img src="../../../assets/searchicon.svg" class="search-icon">
+
+          <div class="search-box" *ngIf="(cfgData|async).searchbar">
+            <div class="search-bar">
+              <input type="text" class="search-bar-input" placeholder="search here" [(ngModel)]="searchData"
+                (keyup)="searchUser()">
+              <img src="/assets/searchicon.svg" class="search-icon">
+            </div>
           </div>
-        </div>
-        <div class="online-users">
-          <span *ngIf="filterUser.length===0">
-            <p class="text-center pt-3 pb-3 alert-warning" *ngIf="onlineUsers.length==0">No Online users Found</p>
-            <span *ngFor="let user of onlineUsers">
-              <div class="user" (click)="userChanged()"
-                [routerLink]="['/chatapplication/', this.currentUser._id, user._id]" routerLinkActive="user-active">
-                <!--<span matBadge="0" matBadgeOverlap="false"></span>-->
-                <img *ngIf="!user.profilepic" src="../../../assets/online-user-logo.svg">
-                <img *ngIf="user.profilepic" src="data:image/png;base64,{{user.profilepic}}" class="on-user-logo">
-                <span>{{user.name}}</span>
-                <div [ngClass]="{'online-status': user.loginstatus, 'offline-status': !user.loginstatus}"></div>
-              </div>
-            </span>
-          </span>
 
-          <span *ngIf="filterUser.length>0">
-            <span *ngFor="let user of filterUser">
-              <div class="user" (click)="userChanged()"
-                [routerLink]="['/chatapplication/', this.currentUser._id, user._id]" routerLinkActive="user-active">
-                <img *ngIf="!user.profilepic" src="../../../assets/online-user-logo.svg">
-                <img *ngIf="user.profilepic" src="data:image/png;base64,{{user.profilepic}}" class="on-user-logo">
-                <span>{{user.name}}</span>
-                <div [ngClass]="{'online-status': user.loginstatus, 'offline-status': !user.loginstatus}"></div>
-              </div>
-            </span>
-          </span>
+          <div class="online-users">
 
+            <ng-container *ngIf="filterUser.length===0">
+              <div class="alert-noUsers text-center" *ngIf="onlineUsers.length==0">
+                <mat-icon>error_outline</mat-icon>
+                <p>No Online users Found</p>
+              </div>
+              <ng-container *ngFor="let user of onlineUsers">
+                <div class="user" (click)="userChanged()" [routerLink]="['/chatapplication/', userId, user._id]"
+                  routerLinkActive="user-active">
+                  <!--<span matBadge="0" matBadgeOverlap="false"></span>-->
+                  <img *ngIf="!user.profilepic" src="assets/online-user-logo.svg">
+                  <img *ngIf="user.profilepic" src="data:image/png;base64,{{user.profilepic}}" class="on-user-logo">
+                  <span>{{user.name}}</span>
+                  <div [ngClass]="{'online-status': user.loginstatus, 'offline-status': !user.loginstatus}"></div>
+                </div>
+              </ng-container>
+            </ng-container>
+
+            <ng-container *ngIf="filterUser.length>0">
+              <ng-container *ngFor="let user of filterUser">
+                <div class="user" (click)="userChanged()" [routerLink]="['/chatapplication/', userId, user._id]"
+                  routerLinkActive="user-active">
+                  <img *ngIf="!user.profilepic" src="assets/online-user-logo.svg">
+                  <img *ngIf="user.profilepic" src="data:image/png;base64,{{user.profilepic}}" class="on-user-logo">
+                  <span>{{user.name}}</span>
+                  <div [ngClass]="{'online-status': user.loginstatus, 'offline-status': !user.loginstatus}"></div>
+                </div>
+              </ng-container>
+            </ng-container>
+
+          </div>
+
+          <button mat-icon-button [matMenuTriggerFor]="menu" class="settings-logo-btn">
+            <img src="assets/settings.svg" class="settings-logo">
+          </button>
         </div>
       </div>
 
-      <div class=" right-bar">
+      <div class="right-bar" (click)="slideLeftBar('remove')" [ngClass]="{'show': left.classList.contains('slide')}">
         <router-outlet></router-outlet>
       </div>
+
     </div>
   </div>
 
@@ -72,11 +88,9 @@
   </mat-menu>
 
 </div>
+
 <div class="container pBarMain text-center" *ngIf="load!=100">
   <img src="../../../assets/Logo.png" class="logo-loading">
   <mat-progress-bar mode="determinate" value={{load}} color="primary"></mat-progress-bar>
   <small>{{loadText}}</small>
 </div>
-
-<!--Resolution Error-->
-<h1 class="text-align-center text-danger err text-left">IT IS A DESKTOP SITE </h1>
