@@ -17,7 +17,6 @@ export class ChatwindowComponent implements OnInit {
   messages = [];
   socket;
   msgData;
-  pSpinner = false;
   rpMSGWindow = false;
   rpBody;
   rpDate;
@@ -82,10 +81,6 @@ export class ChatwindowComponent implements OnInit {
             this.messages = data;
           } else {
             this.messages = [];
-            this.pSpinner = true;
-            setTimeout(() => {
-              this.pSpinner = false;
-            }, 1000);
           }
         },
         (err) => {

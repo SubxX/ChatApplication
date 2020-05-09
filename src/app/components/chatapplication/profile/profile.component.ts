@@ -22,7 +22,6 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   nicknametop;
   searchbar;
   latestupdates;
-  headerBlr = false;
   constructor(
     private fb: FormBuilder, private api: ApiServiceService,
     private router: Router, private cnfg: ProfileconfigService,
@@ -92,8 +91,5 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   }
   updateConfig() {
     this.cnfg.updateProfileConfig({ nicknametop: this.nicknametop, searchbar: this.searchbar, latestupdates: this.latestupdates });
-  }
-  scrollevBxShadow(e) {
-    e.target.scrollTop > 10 ? this.headerBlr = true : this.headerBlr = false;
   }
 }

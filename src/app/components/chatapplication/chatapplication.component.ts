@@ -36,7 +36,7 @@ export class ChatapplicationComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.router.navigate(['/chatapplication/welcome']);
+    this.router.navigate(['/chatapplication/myprofile']);
     this.initLoggedUserPromise();
     this.cu.getUser();
     this.cu.getUserProfilepic();

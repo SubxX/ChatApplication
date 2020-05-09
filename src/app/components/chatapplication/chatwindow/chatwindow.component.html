@@ -21,14 +21,7 @@
         <mat-progress-bar mode="determinate" value={{Loadvalue}} color="primary"></mat-progress-bar>
       </div>
 
-      <div class="msg-thread" *ngIf="init">
-
-        <!-- <img src="../../../../assets/illustration.png" class="bg-thread" [ngClass]="{'fadeInDiv': init}"> -->
-
-        <div class="loadAn" *ngIf="pSpinner">
-          <mat-progress-spinner mode="indeterminate" color="accent" diameter="40" class="spinner">
-          </mat-progress-spinner>
-        </div>
+      <div class="msg-thread">
 
         <span *ngFor="let msg of messages">
 
@@ -81,8 +74,34 @@
             </div>
           </div>
 
-
         </span>
+
+        <div class="sender mb-2">
+          <div>
+            <p>hi there</p>
+            <small class="time-receiver">23.03.2020</small>
+            <i class="material-icons seen-icon">
+              done_all
+            </i>
+          </div>
+          <div class="sender-options">
+            <button class="nbtn"><i class="material-icons msg-options-icons" matTooltip="reply">reply</i></button>
+            <button class="nbtn"><i class="material-icons msg-options-icons" matTooltip="delete">delete</i></button>
+          </div>
+        </div>
+
+        <div class="receiver mb-2">
+          <div class="receiver-options">
+            <button class="nbtn"><i class="material-icons msg-options-icons" matTooltip="reply">reply</i></button>
+          </div>
+          <div>
+
+            <p>hey whatsup</p>
+            <small class="time-sender">2.5.2020</small>
+          </div>
+        </div>
+
+
       </div>
     </div>
 

@@ -1,8 +1,7 @@
 <div class="profile-holder">
   <div class="profile-inner">
 
-    <div class="title text-center pt-1 d-flex align-items-center justify-content-center"
-      [ngClass]="{'hv-tl': headerBlr}">
+    <div class="title text-center pt-1 d-flex align-items-center justify-content-center">
       <button class="back-btn-frpr" mat-icon-button [routerLink]="['/chatapplication/welcome']">
         <mat-icon>arrow_back</mat-icon>
       </button>
@@ -10,7 +9,7 @@
       <span class="text-secondary title-text">PROFILE</span>
     </div>
 
-    <div class="over-flow" (scroll)="scrollevBxShadow($event)">
+    <div class="over-flow scroll_style profile-grid">
 
       <div class="d-flex align-items-center justify-content-center mt-3">
         <div class="profile-pic">
@@ -95,7 +94,14 @@
         </mat-card>
       </div>
 
+
+
     </div>
 
   </div>
 </div>
+
+<!--
+
+
+-->

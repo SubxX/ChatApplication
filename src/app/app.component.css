@@ -1,17 +1,11 @@
-::ng-deep::-webkit-scrollbar {
-  width: 5px;
+.day {
+  --bg-primary: #1848a2;
+  --bg-primary-deep: #093187;
+  --bg-primary-light: #607fbe;
+  --plain-white: #ffff;
+  --root-box-shadow: 2px 3px 20px -6px rgba(0, 0, 0, 0.75);
+  --chat-bg-gradient: linear-gradient(to right, #57c1eb 0%, #246fa8 100%);
+  --mobile-bars-color: #2d293d;
+  --title-border: 1px solid rgba(51, 51, 51, 0.219);
+  --title-bg: #ededed;
 }
-::ng-deep::-webkit-scrollbar {
-    width: 5px;
-  }
-::ng-deep::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 5px grey;
-    border-radius: 5px;
-  }
-::ng-deep::-webkit-scrollbar-thumb {
-    background: grey;
-    border-radius: 5px;
-  }
-::ng-deep::-webkit-scrollbar-thumb:hover {
-    background: rgb(90, 90, 90);
-  }

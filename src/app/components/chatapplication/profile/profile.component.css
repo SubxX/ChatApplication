@@ -7,7 +7,8 @@
 .title {
   width: 100%;
   height: 10%;
-  border-bottom: 1px solid rgba(51, 51, 51, 0.219);
+  border-bottom: var(--title-border);
+  background: var(--title-bg);
   transition: 0.3s ease-in-out;
 }
 
@@ -15,7 +16,6 @@
   overflow-y: auto;
   height: 90%;
   width: 100%;
-  box-sizing: border-box;
   padding: 15px;
 }
 .edit-profile-data {
@@ -35,12 +35,6 @@
   height: 150px;
   border-radius: 50%;
   transition: 0.2s ease;
-}
-.title.hv-tl {
-  border-bottom: none;
-  -webkit-box-shadow: 0 8px 8px -7px #333;
-  -moz-box-shadow: 0 8px 8px -7px #333;
-  box-shadow: 0 8px 8px -7px #333;
 }
 .logo {
   width: 130px;

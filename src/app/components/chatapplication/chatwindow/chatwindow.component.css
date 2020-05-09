@@ -7,22 +7,22 @@
 .current-msg-person {
   width: 100%;
   height: 10%;
-  background: #c4c4c4;
+  border-bottom: 1px solid rgba(51, 51, 51, 0.219);
+  background: #ededed;
 }
 
 .msg-threads-window {
   width: 100%;
   height: 82%;
-  background: url("../../../../assets/illustration.png");
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
+  background: #fff;
   overflow: auto;
 }
 
 .input-box-holder {
   width: 100%;
   height: 8%;
-  background: rgba(51, 51, 51, 0.281);
+  border-top: 1px solid rgba(51, 51, 51, 0.219);
+  background: #ededed;
 }
 .input-box-message-inner {
   width: 95%;
@@ -69,7 +69,7 @@
   color: #333;
   background: #fff;
   padding: 6px 15px;
-  border-radius: 20px;
+  border-radius: 20px 20px 20px 0;
   position: relative;
   height: auto;
   max-width: 40%;
@@ -79,7 +79,7 @@
   color: #fff;
   background: #444;
   padding: 6px 15px;
-  border-radius: 20px;
+  border-radius: 20px 20px 0 20px;
   position: relative;
   height: auto;
   max-width: 40%;
